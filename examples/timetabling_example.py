@@ -18,6 +18,12 @@ if __name__ == '__main__':
     A << F
     
     outfile = open('tex/ex/timetabling.tex', 'w')
+    profile = open('tex/ex/timetabling_profile.tex', 'w')
+    
+    s.latex(profile, animated=True, precedences=False, rows=[[A,F],[E],[B],[C],[D]])
+    s.latex(profile, animated=True, mandatory=True, precedences=False, rows=[[A,F],[E],[B],[C],[D]], stop='-3')
+    s.latex(profile, animated=True, mandatory=True, profile=[res], precedences=False, profp=-.000001, rows=[[A,F],[E],[B],[C],[D]], offset=1, stop='-')
+    
     
     s.latex(outfile, animated=True, precedences=False, rows=[[A,F],[E],[B],[C],[D]])
     s.latex(outfile, animated=True, mandatory=True, profile=[res], precedences=False, profp=-.000001, rows=[[A,F],[E],[B],[C],[D]])

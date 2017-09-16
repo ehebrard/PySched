@@ -5,6 +5,7 @@ import operator
 from collections import deque
 # import _testcapi as limit
 
+import structure.avl_tree as avl
 import structure.theta_tree as theta
 import structure.binary_heap as priority
 from structure.difference_system import *
@@ -631,10 +632,14 @@ class Schedule:
             rows = self.rowsFromPaths()
                             
                         
-        rowsize = [max([self.getDemand(t) for t in p]) for p in rows]
+        rowsize = [max([1]+[self.getDemand(t) for t in p]) for p in rows]
         
-        outfile.write('\\PrintTics{0,%i,...,%i}{%f}\n'%(tics, width+1, f))
-        outfile.write('\\PrintGrid{%i}{%i}\n'%(width, sum(rowsize)))
+        outfile.write('\\PrintTics{0,%i,...,%i}{%f}\n'%(tics, width, f))
+        
+        if f>1 :
+            outfile.write('\\PrintScaledGrid{%i}{%i}{%f}\n'%(width, sum(rowsize), f))
+        else:
+            outfile.write('\\PrintGrid{%i}{%i}\n'%(width, sum(rowsize)))
                
         if tasks is None:
             tasks = [t for r in rows for t in r]
@@ -1217,82 +1222,117 @@ class Timetabling(Propagator):
         self.resource = resource
         self.heap = priority.BinHeap(comparator=operator.__gt__, score=self.resource.schedule.getDemand)
         
-    def tt_pruning(self, profile, bound, cbound, prune, r=True, cond=operator.__le__):
-        
-        cstr = '<='
-        cbstr = 'ect'
-        bstr = 'lst'
-        if cond == operator.__ge__ :
-            cstr = '>='
-            cbstr = 'lst'
-            bstr = 'lst'
-        
-        if DEBUG_TT:
-            print [x for x in profile]
-            
-        if max([u for t,u in profile]) > self.resource.capacity:
-            print 'Failure in profiles'
-            raise Failure(self)
     
-        self.heap.clear()
-        b_sorted = sorted(self.resource, key=bound, reverse=r)
+    def _getLeftForbidden(self, t, best, node):
+        if node is None:
+            return best
+            
+        a,b = node.key
+        if b>t:
+            return self._getLeftForbidden(t, node, node.leftChild)
+        elif best is not None:
+            return best
+        else:
+            return self._getLeftForbidden(t, None, node.rightChild)
+        
+    def getLeftForbidden(self, t, tree): # return the leftmost interval [a,b) in tree such that b>t
+        return self._getLeftForbidden(t, None, tree.rootNode)
+        
+    def _getRightForbidden(self, t, best, node):
+        if node is None:
+            return best
+            
+        a,b = node.key
+        if a<t:
+            return self._getRightForbidden(t, node, node.rightChild)
+        elif best is not None:
+            return best
+        else:
+            return self._getRightForbidden(t, None, node.leftChild)
+        
+    def getRightForbidden(self, t, tree): # return the leftmost interval [a,b) in tree such that b>t
+        return self._getRightForbidden(t, None, tree.rootNode)
+        
+    def propagate(self):
+        change = False        
+        sched = self.resource.schedule
+        profile = self.resource.getProfile()
+
+        lt, lu = profile[0]
+        F = []
+        
+        for t,u in profile[1:]:
+            # print "[%i,%i]:%i"%(lt,t,lu)
+            if lu > self.resource.capacity:
+                raise Failure(self)
+            
+            F.append((lu,(lt,t)))
+            lt,lu = t,u
+            
+        F.sort(reverse=True)
         
         if DEBUG_TT:
-            if r:
-                print '\n sorted by decreasing %s'%bstr
-            else:
-                print '\n sorted by increasing %s'%bstr
-            for t in b_sorted:
-                print t, bound(t)
+            print F
+         
+        tasks = sorted(self.resource, key=sched.getDemand)
         
-        lt, lu = profile[0]
-        
-        change = False
-        for t,u in profile[1:]:
-            
+        tree = avl.AVLTree()
+        j = 0
+        for t in tasks:
             if DEBUG_TT:
-                print ' plateau=[%i,%i) usage=%i'%(lt,t,lu)
+                print t
             
-            while len(b_sorted)>0 and cond(cbound(b_sorted[-1]),lt):
-                
-                if DEBUG_TT:
-                    print ' - %s is concerned b/c %s[%s]=%i %s %i'%(b_sorted[-1], cbstr, b_sorted[-1].name(), cbound(b_sorted[-1]), cstr, lt)
+            tu = sched.getDemand(t)
+            while j < len(F):
+                u,(a,b) = F[j]
+                if u+tu > self.resource.capacity:
+                    tree.myinsert((a,b))
+                else:
+                    break
+                j+=1
                     
-                self.heap.insert(b_sorted.pop())
-                
-            while not self.heap.empty() and self.resource.schedule.getDemand(self.heap.min()) + lu > self.resource.capacity:
-                x = self.heap.delMin()
+            if DEBUG_TT:
+                print tree.out()
+            
+            node = self.getLeftForbidden(sched.getEarliestStart(t), tree)
+            if node is not None:
+                a,b = node.key
                 
                 if DEBUG_TT:
-                    print ' >> %s pruning %i'%(x, lt)
+                    print '[%i,%i]'%(a,b)
                 
-                if prune(x, lt):
-                    change = True
+                et = min(sched.getEarliestCompletion(t), sched.getLatestStart(t))
+                if et > a:
+                    if b > sched.getLatestStart(t):
+                        b = sched.getLatestStart(t)
+                        
+                    if DEBUG_TT:
+                        print " ==> pruning! %s >= %i"%(t,b)
+                        
+                    if sched.setEarliestStart(t, b):
+                        change = True
+                    
+                    
+            node = self.getRightForbidden(sched.getLatestCompletion(t), tree)
+            if node is not None:
+                a,b = node.key
                 
-            lt, lu = t, u
-        
+                if DEBUG_TT:
+                    print '[%i,%i]'%(a,b)
+                
+                et = max(sched.getLatestStart(t), sched.getEarliestCompletion(t))
+                if et < b:
+                    if a < sched.getEarliestCompletion(t):
+                        a = sched.getEarliestCompletion(t)
+                        
+                    if DEBUG_TT:
+                        print " <== pruning! %s <= %i"%(t,a)
+                        
+                    if sched.setLatestCompletion(t, a):
+                        change = True
+                    
         return change
-
-        
-    def propagate(self,trace=False):
-        
-        sched = self.resource.schedule        
-        profile = self.resource.getProfile()
-        
-        change = self.tt_pruning(profile, bound=sched.getLatestStart, cbound=sched.getEarliestCompletion, prune=sched.setLatestCompletion)
-
-        rprofile = []
-        while len(profile)>0:
-            t,u = profile.pop()
-            if len(profile)>0:
-                u = profile[-1][1]
-            rprofile.append((t,u))
-        
-        if self.tt_pruning(rprofile, bound=sched.getEarliestCompletion, cbound=sched.getLatestStart, prune=sched.setEarliestStart, r=False, cond=operator.__ge__):
-            change = True
-            
-        return change
-
+                    
     def __str__(self):
         return 'Timetabling(%s)'%self.resource
         

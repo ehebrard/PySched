@@ -50,6 +50,7 @@
 \newcommand{\stof}[1]{\ensuremath{s_{#1}}}
 \newcommand{\ctof}[1]{\ensuremath{e_{#1}}}
 
+\newcommand{\usagevar}[2]{\ensuremath{u^{#2}_{#1}}}
 \newcommand{\patvar}[2]{\ensuremath{a^{#2}_{#1}}}
 \newcommand{\precvar}[2]{\ensuremath{b_{{#1}{#2}}}}
 
@@ -185,10 +186,10 @@
 \definecolor{burgundy}{rgb}{0.5, 0.0, 0.13}
 
 
-\definecolor{bostonuniversityred}{rgb}{0.8, 0.0, 0.0}
 
 \definecolor{deepchampagne}{rgb}{0.98, 0.84, 0.65}
 
+\definecolor{bostonuniversityred}{rgb}{0.8, 0.0, 0.0}
 
 \def\tasksep{.1}
 
@@ -641,6 +642,9 @@ extstII/.style={color=burgundy, fill=white!#2!brinkpink!50},
 
 \newcommand\PrintGrid[2] {
 	\draw[densely dotted, color=black!90] (0, 0) grid (#1, -#2);
+}
+\newcommand\PrintScaledGrid[3] {
+	\draw[densely dotted, color=black!90, xstep={#3}] (0, 0) grid (#1, -#2);
 }
 % \newcommand\PrintTics[2] {
 % 	\foreach \x in {#1} {
