@@ -9,6 +9,8 @@ if __name__ == '__main__':
     ALS = Task(s,duration=12,release=0,duedate=12,label='A')
     ARS = Task(s,duration=12,release=13,duedate=25,label='A')
     
+    res = Resource(s, 'A', [A,ALS,ARS])
+    
     
     outfile = open('tex/ex/shifts.tex', 'w')
     
@@ -42,4 +44,17 @@ if __name__ == '__main__':
 
     import examples
     examples.writeFile('energetic_example', 'shifts')
+    
+    
+    s = Schedule()
+    
+    A = Task(s,duration=12,release=0,duedate=25,label='A')
+    O = Task(s,duration=16,release=3,duedate=19,demand=2,label='$\\Omega$')
+    
+    res = Resource(s, 'A', [A,O])
+    
+    
+    outfile = open('tex/ex/bounds.tex', 'w')
+    
+    s.latex(outfile, animated=True, width=25, horizon=25, rows=[[A],[O]], windows=True)
 

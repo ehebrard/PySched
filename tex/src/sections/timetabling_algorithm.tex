@@ -1,0 +1,146 @@
+
+
+\begin{frame}
+\frametitle{Time-tabling algorithm: satisfiability check}
+
+\begin{columns}
+	\column{.35\textwidth}
+
+	\begin{myblock}{Resource profile}
+		\uncover<2->{
+		\begin{itemize}
+			\item Compute compulsory parts
+			\uncover<3->{
+			\item Sort ``events'' (start and end times of compulsory parts) ($O(n \log n)$)
+			}
+			\uncover<4->{
+			\item Process events to compute the profile \memph{$P$} ($O(n)$)
+			}
+			\uncover<5->{
+			\item \memph{Sweep} algorithm \mycite{BeldiceanuCarlsson01} (more general)
+			}
+		\end{itemize}
+		}
+	\end{myblock}
+
+	\column{.65\textwidth}
+	\begin{colorschedfigure}{.28}
+		\input{ex/timetabling_profile.tex}
+				\uncover<3>{
+					\draw[color=bostonuniversityred, densely dotted, thick] (4,-6) -- (4,-17.8);
+					\node[color=bostonuniversityred] at (4,-18.5) {\tiny +4};
+					\draw[color=bostonuniversityred, densely dotted, thick] (7,-6) -- (7,-18.8);
+					\node[color=bostonuniversityred] at (7,-19.5) {\tiny -4};
+
+					\draw[color=bostonuniversityred, densely dotted, thick] (9,-10) -- (9,-17.8);
+					\node[color=bostonuniversityred] at (8.8,-18.5) {\tiny +4};
+					\draw[color=bostonuniversityred, densely dotted, thick] (12,-4) -- (12,-17.8);
+					\node[color=bostonuniversityred] at (12,-18.5) {\tiny +3};
+					\node[color=bostonuniversityred] at (12,-19.5) {\tiny -4,-2};
+					\draw[color=bostonuniversityred, densely dotted, thick] (10,-4) -- (10,-17.8);
+					\node[color=bostonuniversityred] at (10.2,-18.5) {\tiny +2};
+					\draw[color=bostonuniversityred, densely dotted, thick] (15,-14) -- (15,-18.8);
+					\node[color=bostonuniversityred] at (15,-19.5) {\tiny -4};
+
+					\draw[color=bostonuniversityred, densely dotted, thick] (16,0) -- (16,-17.8);
+					\node[color=bostonuniversityred] at (16,-18.5) {\tiny +4};
+					\draw[color=bostonuniversityred, densely dotted, thick] (17,0) -- (17,-18.8);
+					\node[color=bostonuniversityred] at (17,-19.5) {\tiny -4};
+
+				}
+	\end{colorschedfigure}
+\end{columns}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Time-tabling algorithm: bound propagator}
+
+\begin{columns}
+	\column{.35\textwidth}
+
+
+	\begin{itemize}
+		\item An interval \memph{$[a,b)$}, a task \memph{$i$}
+		\begin{itemize}
+			\item \memph{overload} iff \memph{$\demand{i}+h > \capacity$}
+			\item \memph{forbidden} iff overload \& \memph{$\lst{i} > a$} (not counted)
+			\item \memph{relevant} iff \memph{$\ect{i}$}
+		\end{itemize}
+		%
+		% \item Adjust \memph{$\est{i}$} to \memph{$b$} if \memph{$\exists [a,b) \in P$} of height \memph{$h$} such that:
+		% \begin{itemize}
+		% 	\item \memph{$\demand{i}+h > \capacity$} {\scriptsize (overload)}
+		% 	\item \memph{$\min(\ect{i}, \lst{i}) > a$} {\scriptsize (is not counted in, and cannot end before, the peak)}
+		% \end{itemize}
+	\end{itemize}
+
+	\uncover<2->{
+	\begin{myblock}{Algorithm \mycite{OuelletQuimper13}}
+	\begin{itemize}
+		\item {\scriptsize compute profile}
+		\uncover<3->{
+		\item {\scriptsize order chuncks by decreasing \memph{$h$}}
+		\item {\scriptsize for \memph{$i \in {\cal T}$} by increasing \memph{$\demand{i}$}:}
+		\begin{itemize}
+			\item {\scriptsize add \memph{$i$}'s overload intervals}
+			\uncover<4->{
+			\item {\scriptsize find \memph{$i$}'s rightmost relevant \& forbidden interval}
+			\begin{itemize}
+				\item $O(\log n)$ if stored in a AVL tree
+			\end{itemize}
+			% \item {\scriptsize if there is \memph{$[a,b)$} s.t.}
+			% \begin{itemize}
+			% 	\item \memph{$\est{i} < b$} and
+			% 	\item \memph{$\min(\ect{i}, \lst{i}) > a$}
+			% \end{itemize}
+			% }
+			% \uncover<5->{
+			% \item {\scriptsize pruning!}
+			}
+		\end{itemize}
+		}
+	\end{itemize}
+	\end{myblock}
+	}
+	\column{.65\textwidth}
+	\begin{colorschedfigure}{.28}
+		\input{ex/timetabling.tex}
+		\uncover<3-5>{
+		\draw[color=bostonuniversityred, ultra thick] (10,-17.5) -- (12,-17.5);
+		}
+		\uncover<4-5>{
+			\node[color=bostonuniversityred] at (10,-18) {\tiny $a$};
+			\node[color=bostonuniversityred] at (12,-18) {\tiny $b$};
+		}
+		\uncover<4>{
+		\node[color=bostonuniversityred] at (5,-3.5) {\tiny $\est{E}$};
+		\node[color=bostonuniversityred] at (11,-3.5) {\tiny $\min(\ect{E},\lst{E})$};
+			\draw[color=bostonuniversityred, very thick, dotted] (5,-4) -- (5,-17.5);
+			\draw[color=bostonuniversityred, very thick, dotted] (10,-4) -- (10,-17.5);
+		}
+		\uncover<5>{
+		\node[color=bostonuniversityred] at (7,-13.5) {\tiny $\est{D}$};
+		\node[color=bostonuniversityred] at (13,-13.5) {\tiny $\min(\ect{C},\lst{D})$};
+			\draw[color=bostonuniversityred, very thick, dotted] (7,-14) -- (7,-17.5);
+			\draw[color=bostonuniversityred, very thick, dotted] (12,-14) -- (12,-17.5);
+		}
+
+		\uncover<6>{
+			\node[color=bostonuniversityred] at (4,-18) {\tiny $a$};
+			\node[color=bostonuniversityred] at (7,-18) {\tiny $b$};
+			\draw[color=bostonuniversityred, ultra thick] (9,-17.5) -- (12,-17.5);
+			\draw[color=bostonuniversityred, ultra thick] (4,-17.5) -- (7,-17.5);
+			\node[color=bostonuniversityred] at (6,-9.5) {\tiny $\est{C}$};
+			\node[color=bostonuniversityred] at (10,-9.5) {\tiny $\min(\ect{C},\lst{C})$};
+			\draw[color=bostonuniversityred, very thick, dotted] (6,-10) -- (6,-17.5);
+			\draw[color=bostonuniversityred, very thick, dotted] (9,-10) -- (9,-17.5);
+		}
+	\end{colorschedfigure}
+\end{columns}
+
+\end{frame}
+
+
+

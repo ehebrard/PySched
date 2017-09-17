@@ -1,0 +1,160 @@
+\begin{frame}
+\frametitle{Disjunctive constraints}
+
+\begin{itemize}
+	\item Change the viewpoint (variables) from start times to precedences
+	\item Notion of disjunctive graph \mycite{RoySussman64} central to \mycite{CarlierPinson89}'s method
+	\begin{itemize}
+		\item If \memph{$i$} and \memph{$j$} require the same exclusive resource\uncover<2->{, then either \memph{$i \prec j$} \uncover<3->{or \memph{$j \prec i$}}}
+	\end{itemize}
+\end{itemize}
+
+\begin{center}
+	\begin{colorschedfigure}{.45}
+		\input{ex/disjunctive_example.tex}
+	\end{colorschedfigure}
+\end{center}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Disjunctive decomposition (single-machine)}
+
+\begin{eqnarray*}
+	\forall i<j \in {\cal T}, &  \memph{\precvar{i}{j} \iff \ctof{i} \leq \stof{j}} \\
+	 &  \memph{\precvar{i}{j} \neq \precvar{j}{i}}
+\end{eqnarray*}
+
+\begin{center}
+	\begin{colorschedfigure}{.45}
+		\input{ex/disjunctive.tex}
+	\end{colorschedfigure}
+\end{center}
+
+\uncover<4->{
+\begin{itemize}
+	\item \memph{Completeness} of disjunctive propagation: deciding only \memph{$\precvar{i}{j}$} variables is sufficient
+\end{itemize}
+}
+
+% \begin{myblock}{Restricting}
+% 	\begin{itemize}
+% 		\item Implication is trivial, equivalence might not be
+% 		\begin{itemize}
+% 			\item
+% 		\end{itemize}
+% 	\end{itemize}
+% \end{myblock}
+
+\end{frame}
+
+\newcommand\istrue[1]{[{#1}]}
+\newcommand\isfalse[1]{\neg [{#1}]}
+
+\begin{frame}
+\frametitle{Disjunctive algorithm}
+
+\begin{eqnarray*}
+	\forall i<j \in {\cal T}, &  {\istrue{\precvar{i}{j}} \implies {i} \prec {j}} & {\footnotesize \hfill \textrm{(post~}{i} \prec {j}\textrm{'s~propagator)}} \\
+														&  \only<1-4>{\isfalse{\precvar{i}{j}} \implies {j} \prec {i}}\only<5->{\memph{\isfalse{\precvar{i}{j}} \implies {j} \prec {i}}} & {\footnotesize \hfill \textrm{(post~}{j} \prec {i}\textrm{'s~propagator)}}\\
+														& {\ect{j} > \lst{i} \implies \istrue{\precvar{i}{j}}} \\
+														& \only<1-3>{\ect{i} > \lst{j} \implies \isfalse{\precvar{i}{j}}}\only<4->{\memph{\ect{i} > \lst{j} \implies \isfalse{\precvar{i}{j}}}}
+\end{eqnarray*}
+
+
+\begin{columns}
+	
+	\column{.6\textwidth}
+
+\uncover<2->{
+\begin{myblock}{Strictly stronger than Time-tabling}
+	\begin{itemize}
+		\item Suppose $\patvar{i}{t} = 0$ and $\ctof{i} > t$.
+		\uncover<3->{
+		\begin{itemize}
+			\item $\exists j$ s.t. $\patvar{j}{t} = 1$ \uncover<4->{hence \memph{$\lst{j} \leq t < \ect{j}$}}
+			\uncover<4->{
+			\item Therefore, \memph{$\lst{j} < \ect{i}$} so \memph{$\precvar{i}{j}$} must be false
+			\uncover<5->{
+			\item and thus \memph{${j} \prec {i}$} is posted
+			}			
+			}
+		\end{itemize}
+		}
+	\end{itemize}
+\end{myblock}
+}
+
+	\column{.4\textwidth}
+
+\uncover<2->{
+		\begin{colorschedfigure}{.4}
+			\PrintTics{0,10,...,11}{1}
+			\PrintGrid{10}{2}
+			\uncover<1->{
+			\LeftExtensibleVariableTask{2.000000}{10.000000}{5.000000}{5.000000}{1}{0}{A}{$i$}
+			}
+			\uncover<2->{
+			\ExtensibleTask{5}{1}{1}{1}{0}{E}{}	
+			\node[] at (5.5, .5) {$t$};
+			
+			\uncover<3->{
+			\MandatoryPartTask{3.000000}{1.000000}{5.000000}{1}{1}{A}{$j$}
+			}
+			
+			\uncover<4->{
+			\draw[thick, densely dashed, color=bostonuniversityred] (7,0) -- (7, -2.3);
+			\node[] at (7, -3) {\scriptsize $\ect{i}$};
+			
+			\draw[thick, densely dashed, color=bostonuniversityred] (5,-1) -- (5, -3.3);
+			\node[] at (5, -4) {\scriptsize $\lst{j}$};
+			}
+			
+			% \ExtensibleVariableTask{0.000000}{10.000000}{4.000000}{4.000000}{1}{1}{A}{$j$}
+			}
+			% \uncover<2>{
+			% \ExtensibleVariableTask{0.000000}{6.000000}{4.000000}{4.000000}{1}{0}{A}{$i$}
+			% \ExtensibleVariableTask{4.000000}{10.000000}{4.000000}{4.000000}{1}{1}{A}{$j$}
+			% \PrunedExtensibleTask{0.000000}{4.000000}{4.000000}{1}{1}{A}{}
+			% \PrunedExtensibleTask{6.000000}{4.000000}{4.000000}{1}{0}{A}{}
+			% }
+		\end{colorschedfigure}	
+	}
+	
+\end{columns}
+
+\end{frame}
+\begin{frame}
+\frametitle{Generalisation to cumulative resources}
+
+\begin{itemize}
+	\item Either \memph{$i \prec j$}, \memph{$j \prec i$} or \memph{$i \not\prec j \wedge j \not\prec i$}
+	\begin{itemize}
+		\item Not complete anymore 
+	\end{itemize}
+	
+	\uncover<2->{
+	\item Straightforward ``particular case'' generalisation \mycite{BaptisteEtAl01}
+	\begin{itemize}
+		\item \memph{$\demand{i}+\demand{j}>\capacity \implies \precvar{i}{j} \vee \precvar{j}{i}$}
+	\end{itemize}
+	\uncover<2->{
+	\item To keep the property that start times do not need to be instanciated:
+	
+	\begin{itemize}
+	\item For every \memph{minimal} subset \memph{$S$} of tasks such that \memph{$\sum_{i \in S}\demand{i} > \capacity$} to post:
+	% \begin{itemize}
+		% \item
+		\memph{$$\bigvee_{i \neq j \in S} i \prec j$$}
+	% \end{itemize}
+	\item Not used in practice
+	\end{itemize}
+	}
+	}
+\end{itemize}
+
+\end{frame}
+
+
+

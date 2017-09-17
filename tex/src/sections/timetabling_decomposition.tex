@@ -1,0 +1,68 @@
+
+\begin{frame}
+\frametitle{Time-tabling decomposition}
+
+\begin{itemize}
+	\item Boolean variables \memph{\patvar{i}{t}} standing for: ``task \memph{$i$} is in process at time \memph{$t$}''
+	\item Enforce bounds consistency on:
+\end{itemize}
+\begin{eqnarray}
+	%\forall i \in {\cal T}, \forall t \in [1,h] & \memph{\patvar{i}{t} \in \{0,1\}} \\
+	\forall i  & {\stof{i} + \dur{i} = \ctof{i}} & {\hfill \scriptsize \textrm{processing~time~\&~non-preemption}} \\
+	\forall t  & {\sum_{i \in {\cal T}} \demand{i}\patvar{i}{t} \leq \capacity} & {\hfill \scriptsize \textrm{resource~capacity}} \\
+	\forall i \forall t & \memph{\patvar{i}{t} \iff \stof{i} \leq t \wedge t < \ctof{i}} & {\hfill \scriptsize \textrm{channeling}} 
+	 % & \memph{(\neg\patvar{i}{t} \wedge t < \ect{i}) \implies \stof{i} > t} \\
+	 % & \memph{(\neg\patvar{i}{t} \wedge t \geq \lst{i}) \implies \ctof{i} \leq t}
+\end{eqnarray}\begin{center}
+	\begin{colorschedfigure}{.45}
+		\input{ex/unary_timetabling.tex}
+	\end{colorschedfigure}\begin{scriptsize}
+	\begin{tabular}{C{1.35cm}C{1.35cm}C{1.35cm}C{1.35cm}C{1.35cm}}
+		\only<1-4>{$\{0,1\}$}\only<5->{$\{1\}$} &
+		\only<1>{$\{0,1\}$}\only<2->{$\{1\}$} &
+		\only<1-2>{$\{0,1\}$}\only<3->{$\{0\}$} &
+		\only<1-2>{$\{0,1\}$}\only<3->{$\{0\}$} & ~\\
+
+		\only<1-4>{$\{0,1\}$}\only<5->{$\{0\}$} &
+		\only<1>{$\{0,1\}$}\only<2->{$\{0\}$} &
+		\only<1-2>{$\{0,1\}$}\only<3->{$\{1\}$} &
+		\only<1-2>{$\{0,1\}$}\only<3->{$\{1\}$} & ~
+	\end{tabular}\end{scriptsize}\end{center}\uncover<2->{
+\begin{itemize}
+	\item $\memph{\stof{A} \leq 1 \wedge 1 < \ctof{A}} \Rightarrow \memph{\patvar{A}{1} = 1}$ \hfill $A$ must be in process at $t=1$
+	\item $\Rightarrow \memph{\patvar{B}{1} = 0} \Rightarrow \memph{\ctof{B} \leq 1 \vee 1 < \stof{B}}$ \hfill $B$ cannot be in process at $t=1$
+	\uncover<3->{
+	\item $\Rightarrow \memph{1 < \stof{B}}$ \hfill $B$ cannot end earlier than $t=2$ so it must start at $t \geq 2$
+	}
+\end{itemize}
+}
+
+\end{frame}
+
+
+
+% \begin{frame}
+% \frametitle{Time-tabling decomposition}
+%
+% \begin{itemize}
+% 	\item Straightforward generalisation to cumulative constraints
+% \end{itemize}
+%
+% \begin{eqnarray}
+% 	%\forall i \in {\cal T}, \forall t \in [1,h] & {\patvar{i}{t} \in \{0,1\}} \\
+% 	\forall i & \stof{i} + \dur{i} = \ctof{i} & {\hfill \scriptsize \textrm{processing~time~\&~non-preemption}} \\
+% 	\forall t & {\sum_{i \in {\cal T}} \memph{\demand{i}}\patvar{i}{t} \leq \memph{\capacity}} & {\hfill \scriptsize \textrm{resource~capacity}} \\
+% 	\forall i \forall t & {\patvar{i}{t} \iff \stof{i} \leq t \wedge t < \ctof{i}} & {\hfill \scriptsize \textrm{channeling}}
+% \end{eqnarray}
+%
+% \begin{center}
+% 	\begin{colorschedfigure}{.45}
+% 		\input{ex/cumulative_timetabling.tex}
+% 	\end{colorschedfigure}
+% \end{center}
+%
+% \end{frame}
+
+
+
+

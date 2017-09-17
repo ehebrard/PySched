@@ -599,7 +599,7 @@ class Schedule:
         return rows
     
             
-    def latex(self, outfile=sys.stdout, animated=False, tasks=None, precedences=True, windows=True, profile=None, profp=0, mandatory=False, rows=None, width=25.0, horizon=None, lb=False, ub=False, decisions=[], tics=None, ghost=[], offset=0, stop='', pruning=False, shift=''):
+    def latex(self, outfile=sys.stdout, animated=False, tasks=None, precedences=True, windows=True, profile=None, profp=0, mandatory=False, rows=None, width=25.0, horizon=None, lb=False, ub=False, decisions=[], tics=None, ghost=[], offset=0, stop='', pruning=False, shifts=[]):
         # h = max([self.getLatestCompletion(t) for t in self.tasks])
         self.close()
         if horizon is None:
@@ -619,6 +619,7 @@ class Schedule:
                 self.printCounter[outfile] = 0
             self.printCounter[outfile] += 1
             outfile.write('\\uncover<%i%s>{\n'%(self.printCounter[outfile]+offset, stop))
+            
                 
         
         if tics is None:
@@ -643,6 +644,13 @@ class Schedule:
                
         if tasks is None:
             tasks = [t for r in rows for t in r]
+            
+        while len(shifts)<len(tasks):
+            shifts.append('')
+            
+        dshift = {}.fromkeys(tasks)
+        for i, t in enumerate(tasks):
+            dshift[t] = shifts[i]
         
         
         phantomed = dict([(t,'') for t in tasks])
@@ -666,7 +674,7 @@ class Schedule:
                         elif len(p) > 1 and i==(len(p)-1):
                             outfile.write(printMethod(t, row=row, factor=f, mode='Right%s'%phantomed[t])+'\n')
                         else:
-                            outfile.write(printMethod(t, row=row, factor=f, mode='%s%s'%(shift,phantomed[t]))+'\n')
+                            outfile.write(printMethod(t, row=row, factor=f, mode='%s%s'%(dshift[t],phantomed[t]))+'\n')
             row += r
 
 

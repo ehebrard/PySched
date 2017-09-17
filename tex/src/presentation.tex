@@ -1,0 +1,167 @@
+\documentclass[usenames,dvipsnames,svgnames,table]{beamer}
+
+
+\usetheme{laas}
+\input{header}
+\input{extra}
+\input{sched_macros}
+\input{theta_macros}
+%
+% \usetikzlibrary{external}
+% \tikzexternalize
+%
+
+% \begin{filecontents}{\jobname.bib}
+% \input{src/biblio/index.bib}
+% \end{filecontents}
+\usepackage[style=authoryear]{biblatex}
+\renewcommand*{\nameyeardelim}{\addcomma\addspace}
+
+
+\newcommand\grayed[1]{\textcolor{black!30}{#1}}
+
+% \usepackage[normalem]{ulem}
+% \usepackage{calc}
+% \newsavebox\CBox
+% \newcommand\hcancel[2][0.5pt]{%
+%   \ifmmode\sbox\CBox{$#2$}\else\sbox\CBox{#2}\fi%
+%   \makebox[0pt][l]{\usebox\CBox}%
+%   \rule[0.5\ht\CBox-#1/2]{\wd\CBox}{#1}}
+\usepackage{cancel}	
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+
+\usepackage{xspace}
+
+\newcommand\pa[1]{\ensuremath{\left(#1\right)}}
+
+
+\definecolor{cadmiumgreen}{rgb}{0.0, 0.42, 0.24}
+\newcommand\mycitation[1]{{\scriptsize \textcolor{cadmiumgreen}{[#1]}}}
+\newcommand\mycite[1]{{\scriptsize \textcolor{cadmiumgreen}{\parencite{#1}}}}
+
+% \usepackage{tkz-graph}
+% \usetikzlibrary{arrows,%
+%                 petri,%
+%                 topaths,%
+% 								calc,%
+% 								automata,
+% 								positioning}%
+
+
+\author{Emmanuel Hebrard}
+\title{Resource Constraints in Scheduling}
+
+
+
+%\addbibresource{\jobname.bib}
+\addbibresource{src/biblio/index.bib}
+\begin{document}
+
+
+\maketitle
+
+
+
+\section{Introduction}
+
+\input{src/sections/plan.tex}
+\input{src/sections/examples.tex}
+\input{src/sections/notations.tex}
+\input{src/sections/CP.tex}
+
+\section{Time-tabling}
+
+\input{src/sections/timetabling_intuition.tex}
+\input{src/sections/timetabling_decomposition.tex}
+\input{src/sections/timetabling_algorithm.tex}
+
+\section{Disjunctive reasoning}
+
+\input{src/sections/disjunctive.tex}
+
+\section{Energetic reasoning}
+
+\input{src/sections/ERrelaxation.tex}
+\input{src/sections/EdgeFinding.tex}
+\input{src/sections/ThetaTree.tex}
+\input{src/sections/CumulativeEF.tex}
+\input{src/sections/TimetablingEF.tex}
+\input{src/sections/EnergeticReasoning.tex}
+
+\section{Search}
+
+\input{src/sections/graph.tex}
+
+\section{Other types of resource}
+
+\input{src/sections/other.tex}
+
+
+
+
+
+
+% \section{Single Machine Resource}
+%
+% % \input{src/sections/unary.tex}
+%
+% \section{Cumulative Resource}
+
+% \input{src/sections/cumulative.tex}
+
+% \section{Search}
+
+% \input{src/sections/graph.tex}
+
+% \section{Other Resources}
+
+% \input{src/sections/other.tex}
+
+% \input{src/sections/search.tex}
+
+% \section{Single Machine Resource}
+%
+% \input{src/sections/disjunct.tex}
+
+% \input{src/sections/unary.tex}
+
+
+% \begin{frame}
+%
+% \begin{center}
+%
+% \input{theta.tex}
+%
+% \end{center}
+%
+% \end{frame}
+
+% \section{Cumulative Resource}
+%
+% \section{Other Resources}
+
+
+\begin{frame}[allowframebreaks]
+	\frametitle{Bibliography}
+	
+	\AtNextBibliography{\tiny}
+	\printbibliography
+
+	
+\end{frame}
+
+
+
+
+
+
+\end{document}
+
+
+
+

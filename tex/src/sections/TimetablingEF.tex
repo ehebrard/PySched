@@ -1,0 +1,127 @@
+
+
+\begin{frame}
+\frametitle{Time-tabling Edge Finding}
+
+
+\begin{itemize}
+	\item Time-tabling and (Extended) Edge finding are incomparable when $\capacity>1$
+	\uncover<5->{
+	\begin{itemize}
+		\item Combine them! \memph{$3 \times 8 + 4 + 5 > 4 \times 8$}
+	\end{itemize}
+	}
+
+
+\end{itemize}
+
+\begin{center}
+	\begin{colorschedfigure}{.4}
+
+		\uncover<1-2>{
+		\input{ex/incomparable.tex}
+		}
+		\uncover<3>{
+		\input{ex/efview.tex}
+		}
+		\uncover<4>{
+		\input{ex/eefview.tex}
+		\PrunedExtensibleTask{0}{5}{5}{2}{0}{A}{}
+		\PrunedExtensibleTask{12}{5}{5}{2}{0}{A}{}
+		}
+		\uncover<5->{
+		\input{ex/ttef.tex}
+		}
+	\end{colorschedfigure}
+	
+	\vspace{-1.5cm}
+	\uncover<3->{
+	\only<3>{\memph{$20+4+4 \leq 3 \times 12 = 36$}}
+	\only<4>{\memph{$10+4+4 \leq 3 \times 7 = 21$}}
+	}
+	
+\end{center}
+
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Time-tabling Edge Finding decomposition}
+
+
+\begin{itemize}
+	\item Channel Time-tabling and (Extended) Edge finding decompositions
+	\uncover<3->{
+	\begin{itemize}
+		\item Algorithm in $O(n^2)$ for Edge finding + Time-tabling~\mycite{Vilim11}
+		\item Algorithm in $O(kn \log n)$ for Edge finding + Extended Edge finding + Time-tabling~\mycite{OuelletQuimper13}
+	\end{itemize}
+	}
+\end{itemize}
+
+
+\begin{footnotesize}
+	\begin{eqnarray*}
+		\forall \Omega \subseteq {\cal T} & \energy{\Omega} \leq \capacity(\ctof{\Omega} - \stof{\Omega}) \only<2->{\memph{- \sum_{t=\stof{\Omega}}^{\ctof{\Omega}}\sum_{i \not\in \Omega} {\demand{i}}\patvar{i}{t}}}  \\
+		\forall \Omega \subseteq {\cal T},~\forall c &  R(\Omega, \demand{}) = \energy{\Omega} - (\capacity - \demand{})(\ctof{\Omega} - \stof{\Omega}) \\
+		\forall \Omega \subseteq {\cal T},~\forall i \not\in \Omega,~\forall \Omega' \in \Omega & {\energy{\Omega \cup \{i\}} > \capacity(\ctof{\Omega} - \stof{\Omega \cup \{i\}})} {\implies \stof{i} \geq \stof{\Omega'} + \frac{1}{\demand{i}}R(\Omega', \demand{i})} \\
+		\forall \Omega \subseteq {\cal T},~\forall i \not\in \Omega,~\forall \Omega' \in \Omega & \energy{\Omega}+(\ctof{i} - \stof{\Omega})\demand{i} > \capacity(\ctof{\Omega} - \stof{\Omega}) \implies \stof{i} \geq \stof{\Omega'} + \frac{1}{\demand{i}}R(\Omega', \demand{i})
+		% \forall t & {\sum_{i \in {\cal T}} {\demand{i}}\patvar{i}{t} \leq {\capacity}}
+		\onslide<2->{
+		\\
+		\forall i \forall t & \memph{\patvar{i}{t} \iff \stof{i} \leq t \wedge t < \ctof{i}}
+		}
+	\end{eqnarray*}
+
+\end{footnotesize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Time-tabling Edge Finding algorithm}
+
+	\begin{myblock}{Algorithm of~\mycite{OuelletQuimper13}}
+		\uncover<3->{
+		\begin{itemize}
+			\item A fixed task for each interval of the profile, remove the compulsory part from the task
+			\item Apply any \memph{extended} edge finding algorithm
+		\end{itemize}
+		}
+	\end{myblock}
+
+
+	\begin{columns}[t]
+
+		\column{.5\textwidth}
+	\begin{colorschedfigure}{.3}
+		\input{ex/ttef_orig.tex}
+		\uncover<3->{
+			\draw[ultra thick, profA] (8, -14.5) -- (8, -15.5);
+			\draw[ultra thick, profA] (9, -13.5) -- (9, -15.5);
+			\draw[ultra thick, profA] (10, -13.5) -- (10, -15.5);
+			\draw[ultra thick, profA] (11, -14.5) -- (11, -15.5);
+			\draw[ultra thick, profA] (13, -14.5) -- (13, -15.5);
+
+			\node[font=\tiny] at (4, -15) {1};
+			\node[font=\tiny] at (7, -15) {2};
+			\node[font=\tiny] at (8.5, -15) {3};
+			\node[font=\tiny] at (9.5, -15) {4};
+			\node[font=\tiny] at (10.5, -15) {5};
+			\node[font=\tiny] at (12, -15) {6};
+			\node[font=\tiny] at (13.5, -15) {7};
+		}
+
+	\end{colorschedfigure}
+
+		\column{.5\textwidth}
+	\begin{colorschedfigure}{.3}
+		\input{ex/ttef_decomposition.tex}
+	\end{colorschedfigure}
+
+	\end{columns}
+
+\end{frame}
+

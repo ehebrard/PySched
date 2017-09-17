@@ -1,0 +1,173 @@
+
+
+\begin{frame}
+\frametitle{Energetic reasoning \mycite{LopezPhD}}
+
+\begin{itemize}
+	\item Energy of a set of tasks $\implies$ Energy of \memph{all tasks} over a given \memph{interval}
+\end{itemize}
+
+\begin{center}
+	\begin{colorschedfigure}{.42}
+		\input{ex/shifts.tex}
+	\end{colorschedfigure}
+	% \vspace{-1cm}
+	\uncover<1->{ \begin{myblock}{Notion of energy (over an interval)}
+	\begin{center}
+	\begin{columns}
+		\column{.5\textwidth}
+	\begin{itemize}
+		\item $\memph{\leftshift{j}{a}} = \max(0, \dur{j}-\max(0, a - \stof{j}))$
+		\item $\memph{\rightshift{j}{b}} = \max(0, \dur{j}-\max(0, \ctof{j} - b))$
+		\item $\memph{\energyon{j}{a}{b}} = \demand{j} \min(b-a, \leftshift{j}{a}, \rightshift{j}{b})$
+	\end{itemize}
+		\column{.4\textwidth}
+	\begin{itemize}
+		\item  $\memph{\totalenergy{a}{b}} = \sum_{j \in {\cal T}}\energyon{j}{a}{b}$
+	\end{itemize}
+	\end{columns}
+	\end{center}
+
+\end{myblock}
+}
+\end{center}
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Energetic reasoning decomposition}
+
+\begin{eqnarray*}
+	\forall 0 \leq a < b < h &  \memph{\totalenergy{a}{b} \leq \capacity(b-a)} & {\textrm{(ER)}} 
+	% \label{eq:fullER}
+\end{eqnarray*}
+
+\uncover<2-> {
+\begin{columns}
+
+\column{.45\textwidth}
+
+\begin{myblock}{Relevant intervals \mycite{BaptistePhD}}
+\begin{eqnarray*}
+		% O_1 & = & \memph{\bigcup_{i \in {\cal T}}\{\est{i},\lst{i},\ect{i}\}} \\
+		% O_2 & = & \memph{\bigcup_{i \in {\cal T}}\{\lct{i},\lst{i},\ect{i}\}} \\
+		% O(t) & = & \memph{\{\lst{i}-t \mid i \in {\cal T}\}}
+		O_1(i) & = & \memph{\{\est{i},\lst{i},\ect{i}\}} \\
+		O_2(i) & = & \memph{\{\lct{i},\lst{i},\ect{i}\}} \\
+		O(i,t) & = & \memph{\{\lst{i}-t \mid i \in {\cal T}\}}
+\end{eqnarray*}
+% \uncover<3-> {
+% \begin{eqnarray*}
+% 	% (\ref{eq:fullER})
+% 	\textrm{(ER)}
+% 	 \iff & \forall a \in O_1, \forall b \in O_2, \totalenergy{a}{b} \leq \capacity(b-a) & \wedge \\
+% 	 & \forall a \in O_1, \forall b \in O(a), \totalenergy{a}{b} \leq \capacity(b-a) & \wedge \\
+% 	 & \forall b \in O_2, \forall a \in O(b), \totalenergy{a}{b} \leq \capacity(b-a) &
+% \end{eqnarray*}
+% }
+\end{myblock}
+
+\column{.07\textwidth}
+
+\column{.48\textwidth}
+
+\begin{itemize}
+	\item (ER) holds iff it holds for every \memph{$i \neq j$} and every \memph{$a < b$} s.t.
+	\begin{itemize}
+		\item $a,b \in O_1(i) \times O_2(j)$
+		\item $a,b \in O_1(i) \times O(j,a)$
+		\item $a,b \in O_2(i) \times O(j,b)$
+	\end{itemize}
+\end{itemize}
+
+\end{columns}
+
+\begin{itemize}
+	\item \memph{$O(n^2)$} relevant intervals, \memph{$15$} for each pair \memph{$i,j$} \mycite{BaptisteEtAl01}
+	\begin{itemize}
+		\item Algorithm to check them all in $O(n^2)$ \mycite{BaptisteEtAl01}
+	\end{itemize}
+	\uncover<3->{
+	\item Possible with only \memph{$2$} intervals for each pair \mycite{DerrienPetit14}
+	}
+\end{itemize}
+}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Energetic reasoning decomposition}
+
+\begin{eqnarray*}
+	\forall 0 \leq a < b < h &  {\totalenergy{a}{b} \leq \capacity(b-a)} 
+\end{eqnarray*}
+\vspace{-5mm}
+\uncover<3->{
+{\footnotesize
+\begin{eqnarray*}
+	& \underbrace{\totalenergy{a}{b} \memph{+ \leftshift{i}{a} - \energyon{i}{a}{b}} - \capacity(b-a)}_{R ~({\rm at~least~after~}b)} > 0 \implies \ctof{i} \geq b + \frac{R}{\demand{i}} 
+	\onslide<4->{ \\
+	& \memph{\min(b-a,\leftshift{i}{a})} - \underbrace{\memph{\energyon{i}{a}{b}} + \capacity(b-a) - \totalenergy{a}{b}}_{R ~({\rm at~most~before~}b)} > 0 \implies \stof{i} \geq b - \frac{R}{\demand{i}}
+	}
+\end{eqnarray*}
+}
+}
+
+\begin{center}
+	\begin{colorschedfigure}{.42}
+		\PrintTics{0,5,...,25}{1.000000}
+		\PrintGrid{25}{4}
+		\uncover<1-2> {
+		\ExtensibleVariableTask{0.000000}{25.000000}{12.000000}{12.000000}{1}{0}{A}{A}
+		}
+		\draw[ub] (3,.5) -- (3,-4.5);
+		\node[] (a) at (3,-4.8) {a=3};
+		\draw[ub] (19,.5) -- (19,-4.5);
+		\node[] (b) at (19,-4.8) {b=19};
+		
+		\uncover<2>{
+		\UnlabeledGroundTask{3.000000}{16.000000}{2.5}{1.5}{A}{$\totalenergy{3}{16}-\energyon{i}{3}{16}=40$}
+		}
+		\uncover<3>{
+		% \UnlabeledGroundTask{3.000000}{8.000000}{1}{1}{A}{}
+		% \UnlabeledGroundTask{3.000000}{16.000000}{2}{2}{A}{}
+		\PhantomUnlabeledGroundTask{11}{5}{1}{0}{A}{$i$}
+		\UnlabeledGroundTask{19.000000}{1.000000}{1}{0}{A}{$R$}
+		\UnlabeledGroundTask{3.000000}{16.000000}{3}{1}{A}{$\capacity(b-a)$}
+		}
+		\uncover<4>{
+		\UnlabeledGroundTask{11}{8}{1}{0}{A}{$R$}
+		\PhantomUnlabeledGroundTask{19.000000}{4.000000}{1}{0}{A}{$i$}
+		\UnlabeledGroundTask{3.000000}{16}{2.5}{1.5}{A}{$\capacity(b-a) - R$}
+		}
+	\end{colorschedfigure}
+	
+	\uncover<2->{
+	\begin{itemize}
+		\item \memph{$\capacity = 3$}, maximum energy on \memph{$[3,19) = 48$} ($\totalenergy{3}{16} = 46,~\energyon{i}{3}{16}=6$) 
+	\end{itemize}
+	}
+	
+\end{center}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Energetic reasoning algorithm}
+
+\begin{itemize}
+	\item $O(n^3)$ \mycite{BaptisteEtAl01}
+	\uncover<2->{
+	\item $O(n^2 \log n)$ \mycite{Bonifas14,Tesch16} 
+	\begin{itemize}
+		\item Not complete, but at least one bound adjustment (hence $O(kn^2 \log n)$ where $k$ is the number of tasks requiring a bound adjustment)
+	\end{itemize}
+	}
+\end{itemize}
+
+
+\end{frame}
+
+
