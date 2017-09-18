@@ -62,11 +62,15 @@
 
 
 	\begin{itemize}
-		\item An interval \memph{$[a,b)$}, a task \memph{$i$}
+		\item Interval \memph{$[a,b):h$}, Task \memph{$i$}
 		\begin{itemize}
-			\item \memph{overload} iff \memph{$\demand{i}+h > \capacity$}
-			\item \memph{forbidden} iff overload \& \memph{$\lst{i} > a$} (not counted)
-			\item \memph{relevant} iff \memph{$\ect{i}$}
+			\item \memph{overloaded} iff \memph{$\demand{i}+h > \capacity$}
+			\item \memph{relevant} iff 
+				\begin{itemize}
+					\item \memph{$\est{i} < b$} and
+					\item \memph{$\min(\ect{i},\lst{i}) > a$}
+				\end{itemize}	
+			% \item \memph{forbidden} iff \memph{$\min(\ect{i},\lst{i}) > a$}
 		\end{itemize}
 		%
 		% \item Adjust \memph{$\est{i}$} to \memph{$b$} if \memph{$\exists [a,b) \in P$} of height \memph{$h$} such that:
@@ -86,7 +90,7 @@
 		\begin{itemize}
 			\item {\scriptsize add \memph{$i$}'s overload intervals}
 			\uncover<4->{
-			\item {\scriptsize find \memph{$i$}'s rightmost relevant \& forbidden interval}
+			\item {\scriptsize find \memph{$i$}'s rightmost relevant \& overload interval}
 			\begin{itemize}
 				\item $O(\log n)$ if stored in a AVL tree
 			\end{itemize}

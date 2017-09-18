@@ -70,7 +70,7 @@
 \uncover<2->{
 \begin{myblock}{Strictly stronger than Time-tabling}
 	\begin{itemize}
-		\item Suppose $\patvar{i}{t} = 0$ and $\ctof{i} > t$.
+		\item Suppose $\patvar{i}{t} = 0$ and $\ctof{i} > t$
 		\uncover<3->{
 		\begin{itemize}
 			\item $\exists j$ s.t. $\patvar{j}{t} = 1$ \uncover<4->{hence \memph{$\lst{j} \leq t < \ect{j}$}}
@@ -131,14 +131,14 @@
 \begin{itemize}
 	\item Either \memph{$i \prec j$}, \memph{$j \prec i$} or \memph{$i \not\prec j \wedge j \not\prec i$}
 	\begin{itemize}
-		\item Not complete anymore 
+		\item Easy change: \memph{$\precvar{i}{i} \neq \precvar{j}{i}$} becomes \memph{$\neg(\precvar{i}{j} \wedge \precvar{j}{i})$}, but not complete anymore! 
 	\end{itemize}
 	
-	\uncover<2->{
-	\item Straightforward ``particular case'' generalisation \mycite{BaptisteEtAl01}
-	\begin{itemize}
-		\item \memph{$\demand{i}+\demand{j}>\capacity \implies \precvar{i}{j} \vee \precvar{j}{i}$}
-	\end{itemize}
+	% \uncover<2->{
+	% \item Straightforward ``particular case'' generalisation \mycite{BaptisteEtAl01}
+	% \begin{itemize}
+	% 	\item \memph{$\demand{i}+\demand{j}>\capacity \implies \precvar{i}{j} \vee \precvar{j}{i}$}
+	% \end{itemize}
 	\uncover<2->{
 	\item To keep the property that start times do not need to be instanciated:
 	
@@ -146,12 +146,12 @@
 	\item For every \memph{minimal} subset \memph{$S$} of tasks such that \memph{$\sum_{i \in S}\demand{i} > \capacity$} to post:
 	% \begin{itemize}
 		% \item
-		\memph{$$\bigvee_{i \neq j \in S} i \prec j$$}
+		\memph{$$\bigvee_{i \neq j \in S} \precvar{i}{j}$$}
 	% \end{itemize}
 	\item Not used in practice
 	\end{itemize}
 	}
-	}
+	% }
 \end{itemize}
 
 \end{frame}
