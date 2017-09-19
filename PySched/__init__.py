@@ -527,7 +527,7 @@ class Schedule:
     def setDemand(self, t, d):
         self.demand[int(t)] = d
                         
-    def latexPrecedences(self, outfile, style='', tasks=None):
+    def latexPrecedences(self, outfile, style='', tasks=None, decisions=True):
         if tasks is None:
             tasks = self.tasks
         
@@ -536,7 +536,7 @@ class Schedule:
         while lvl>0:
             lvl -= 1
             first = self.graph.trail[lvl]
-            if lvl == 0:
+            if lvl == 0 or not decisions:
                 first -= 1
             while ei > first:
                 x,y,k,o = self.graph.edges[ei]
@@ -599,7 +599,7 @@ class Schedule:
         return rows
     
             
-    def latex(self, outfile=sys.stdout, animated=False, tasks=None, precedences=True, windows=True, profile=None, profp=0, mandatory=False, rows=None, width=25.0, horizon=None, lb=False, ub=False, decisions=[], tics=None, ghost=[], offset=0, stop='', pruning=False, shifts=[]):
+    def latex(self, outfile=sys.stdout, animated=False, tasks=None, precedences=True, windows=True, profile=None, profp=0, mandatory=False, rows=None, width=25.0, horizon=None, lb=False, ub=False, tics=None, ghost=[], offset=0, stop='', pruning=False, shifts=[], decisions=True):
         # h = max([self.getLatestCompletion(t) for t in self.tasks])
         self.close()
         if horizon is None:
@@ -687,7 +687,7 @@ class Schedule:
                 self.latexProfile(outfile, resources=profile, offset=row, factor=f)
            
         if precedences :
-            self.latexPrecedences(outfile, tasks=tasks)
+            self.latexPrecedences(outfile, tasks=tasks, decisions=decisions)
                 
         if ub:
             u = self.getMakespanUB()

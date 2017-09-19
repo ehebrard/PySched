@@ -209,6 +209,9 @@
 				\item Transitive closure on precedences: \mycitation{Floyd--Warshall}
 			\end{itemize}
 		\end{itemize}
+		\uncover<2->{
+		\item Simulated by precedence constraints propagation and the ``orchestra's conductor''
+		}
 	\end{itemize}
 	
 
@@ -222,6 +225,12 @@
 	\begin{myblock}{Search on the precedence graph}
 		\begin{itemize}
 			\item Variable \memph{$\precvar{i}{j}$} standing for \memph{$i \prec j$} for each pair of tasks \memph{$i,j$} sharing a resource
+			\uncover<4->{
+					\begin{itemize}
+						\item Disjunctive constraints $\implies$ there is a solution iff there is no negative cycle 
+						% \item Disjunctive constraints (\memph{$\forall i,j~ \precvar{i}{j} \implies i \prec j; \precvar{i}{j} \neq \precvar{j}{i}$})
+					\end{itemize}
+					}
 		\end{itemize}		
 	\end{myblock}
 	\vspace{-.75cm}
@@ -260,101 +269,101 @@
 
 
 
-\begin{frame}
-	\frametitle{Precedence search}
-
-	\begin{myblock}{Search on the precedence graph}
-		\begin{itemize}
-			\item There is a solution iff there is no negative cycle (no need to assign the start times)			
-			\item Disjunctive constraints (\memph{$\forall i,j~ \precvar{i}{j} \implies i \prec j; \precvar{i}{j} \neq \precvar{j}{i}$})
-			% \begin{itemize}
-			% 	\item Unary constraints: complete the subgraph corresponding to a resource
-			% \end{itemize}
-			% \item Look-ahead much harder for cumulative resource, but checking a complete graph is still easy
-		\end{itemize}		
-	\end{myblock}
-	\vspace{-.75cm}
-	\begin{center}
-		\begin{colorschedfigure}{.6}
-				\input{ex/precedence_graph.tex}
-					\path (x4) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm] 
-					%node[labelstyle, near start] {\textcolor{black}{$\precvar{B}{C}$}} 
-					(x7);
-					\path (x6) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm] 
-					%node[labelstyle, near start] {\textcolor{black}{$\precvar{C}{B}$}} 
-					(x5);
-					\path (x8) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm] 
-					%node[labelstyle, near start] {\textcolor{black}{$\precvar{B}{C}$}} 
-					(x11);
-					\path (x10) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm] 
-					%node[labelstyle, near start] {\textcolor{black}{$\precvar{C}{B}$}} 
-					(x9);
-					\path (x10) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm] 
-					%node[labelstyle, near start] {\textcolor{black}{$\precvar{B}{C}$}} 
-					(x13);
-					\path (x12) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm] 
-					%node[labelstyle, near start] {\textcolor{black}{$\precvar{C}{B}$}} 
-					(x11);
-					\path (x8) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm] 
-					%node[labelstyle, near start] {\textcolor{black}{$\precvar{B}{C}$}} 
-					(x13);
-					\path (x12) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm] 
-					%node[labelstyle, near start] {\textcolor{black}{$\precvar{C}{B}$}} 
-					(x9);
-		\end{colorschedfigure}
-	\end{center}
-
-	
-\end{frame}
-
-
-
-\begin{frame}
-	\frametitle{Precedence search}
-
-	\begin{myblock}{Search on the precedence graph}
-		\begin{itemize}
-			\item Cumulative constraints ($\forall i,j~ \precvar{i}{j} \implies i \prec j; \memph{\neg \precvar{i}{j} \vee \neg \precvar{j}{i}}$)
-			\uncover<2->{
-			\[
-			\memph{\forall \Omega~ \sum_{i \in \Omega} \demand{i} > \capacity \implies \sum_{i \in \Omega}\sum_{j \in \Omega}\precvar{i}{j} > 0} 
-			\]
-			}
-		\end{itemize}		
-	\end{myblock}
-	\vspace{-.75cm}
-	\begin{center}
-		\begin{colorschedfigure}{.6}
-				\input{ex/precedence_graph.tex}
-					\path (x4) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm] 
-					%node[labelstyle, near start] {\textcolor{black}{$\precvar{B}{C}$}} 
-					(x7);
-					\path (x6) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm] 
-					%node[labelstyle, near start] {\textcolor{black}{$\precvar{C}{B}$}} 
-					(x5);
-					\path (x8) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm] 
-					%node[labelstyle, near start] {\textcolor{black}{$\precvar{B}{C}$}} 
-					(x11);
-					\path (x10) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm] 
-					%node[labelstyle, near start] {\textcolor{black}{$\precvar{C}{B}$}} 
-					(x9);
-					\path (x10) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm] 
-					%node[labelstyle, near start] {\textcolor{black}{$\precvar{B}{C}$}} 
-					(x13);
-					\path (x12) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm] 
-					%node[labelstyle, near start] {\textcolor{black}{$\precvar{C}{B}$}} 
-					(x11);
-					\path (x8) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm] 
-					%node[labelstyle, near start] {\textcolor{black}{$\precvar{B}{C}$}} 
-					(x13);
-					\path (x12) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm] 
-					%node[labelstyle, near start] {\textcolor{black}{$\precvar{C}{B}$}} 
-					(x9);
-		\end{colorschedfigure}
-	\end{center}
-
-	
-\end{frame}
+% \begin{frame}
+% 	\frametitle{Precedence search}
+%
+% 	\begin{myblock}{Search on the precedence graph}
+% 		\begin{itemize}
+% 			\item There is a solution iff there is no negative cycle (no need to assign the start times)
+% 			\item Disjunctive constraints (\memph{$\forall i,j~ \precvar{i}{j} \implies i \prec j; \precvar{i}{j} \neq \precvar{j}{i}$})
+% 			% \begin{itemize}
+% 			% 	\item Unary constraints: complete the subgraph corresponding to a resource
+% 			% \end{itemize}
+% 			% \item Look-ahead much harder for cumulative resource, but checking a complete graph is still easy
+% 		\end{itemize}
+% 	\end{myblock}
+% 	\vspace{-.75cm}
+% 	\begin{center}
+% 		\begin{colorschedfigure}{.6}
+% 				\input{ex/precedence_graph.tex}
+% 					\path (x4) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm]
+% 					%node[labelstyle, near start] {\textcolor{black}{$\precvar{B}{C}$}}
+% 					(x7);
+% 					\path (x6) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm]
+% 					%node[labelstyle, near start] {\textcolor{black}{$\precvar{C}{B}$}}
+% 					(x5);
+% 					\path (x8) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm]
+% 					%node[labelstyle, near start] {\textcolor{black}{$\precvar{B}{C}$}}
+% 					(x11);
+% 					\path (x10) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm]
+% 					%node[labelstyle, near start] {\textcolor{black}{$\precvar{C}{B}$}}
+% 					(x9);
+% 					\path (x10) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm]
+% 					%node[labelstyle, near start] {\textcolor{black}{$\precvar{B}{C}$}}
+% 					(x13);
+% 					\path (x12) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm]
+% 					%node[labelstyle, near start] {\textcolor{black}{$\precvar{C}{B}$}}
+% 					(x11);
+% 					\path (x8) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm]
+% 					%node[labelstyle, near start] {\textcolor{black}{$\precvar{B}{C}$}}
+% 					(x13);
+% 					\path (x12) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm]
+% 					%node[labelstyle, near start] {\textcolor{black}{$\precvar{C}{B}$}}
+% 					(x9);
+% 		\end{colorschedfigure}
+% 	\end{center}
+%
+%
+% \end{frame}
+%
+%
+%
+% \begin{frame}
+% 	\frametitle{Precedence search}
+%
+% 	\begin{myblock}{Search on the precedence graph}
+% 		\begin{itemize}
+% 			\item Cumulative constraints ($\forall i,j~ \precvar{i}{j} \implies i \prec j; \memph{\neg \precvar{i}{j} \vee \neg \precvar{j}{i}}$)
+% 			\uncover<2->{
+% 			\[
+% 			\memph{\forall \Omega~ \sum_{i \in \Omega} \demand{i} > \capacity \implies \sum_{i \in \Omega}\sum_{j \in \Omega}\precvar{i}{j} > 0}
+% 			\]
+% 			}
+% 		\end{itemize}
+% 	\end{myblock}
+% 	\vspace{-.75cm}
+% 	\begin{center}
+% 		\begin{colorschedfigure}{.6}
+% 				\input{ex/precedence_graph.tex}
+% 					\path (x4) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm]
+% 					%node[labelstyle, near start] {\textcolor{black}{$\precvar{B}{C}$}}
+% 					(x7);
+% 					\path (x6) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm]
+% 					%node[labelstyle, near start] {\textcolor{black}{$\precvar{C}{B}$}}
+% 					(x5);
+% 					\path (x8) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm]
+% 					%node[labelstyle, near start] {\textcolor{black}{$\precvar{B}{C}$}}
+% 					(x11);
+% 					\path (x10) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm]
+% 					%node[labelstyle, near start] {\textcolor{black}{$\precvar{C}{B}$}}
+% 					(x9);
+% 					\path (x10) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm]
+% 					%node[labelstyle, near start] {\textcolor{black}{$\precvar{B}{C}$}}
+% 					(x13);
+% 					\path (x12) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm]
+% 					%node[labelstyle, near start] {\textcolor{black}{$\precvar{C}{B}$}}
+% 					(x11);
+% 					\path (x8) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm]
+% 					%node[labelstyle, near start] {\textcolor{black}{$\precvar{B}{C}$}}
+% 					(x13);
+% 					\path (x12) edge[dashed, ->, thick, shorten >=1mm,shorten <=1mm]
+% 					%node[labelstyle, near start] {\textcolor{black}{$\precvar{C}{B}$}}
+% 					(x9);
+% 		\end{colorschedfigure}
+% 	\end{center}
+%
+%
+% \end{frame}
 
 
 
@@ -377,8 +386,8 @@
 			\column{.4\textwidth}
 			\begin{myblock}{IBM CP Optimizer}
 				\begin{itemize}
-					\item Every algorithm seen here and use Cplex linear relaxation
-					\item Alternate large neighborhood search and strong lower bounds from Cplex
+					\item Every algorithm seen here (use Cplex's linear relaxation?)
+					\item Alternate large neighborhood search and Failure Directed Search
 					\item Specialized strategies and auto-tuning
 				\end{itemize}
 			\end{myblock}

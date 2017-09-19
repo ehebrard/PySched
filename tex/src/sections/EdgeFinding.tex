@@ -26,7 +26,7 @@ Bound consistency on this decomposition fails \\
 
 
 \begin{frame}
-\frametitle{Edge Finding}
+\frametitle{Edge Finding decomposition (single-machine)}
 
 \begin{itemize}
 	\item Channel to precedence variables \mycite{CarlierPinson89}, \mycite{ApplegateCook91}
@@ -39,10 +39,10 @@ Bound consistency on this decomposition fails \\
 	\grayed{\forall \Omega \subseteq {\cal T}} & \grayed{\stof{\Omega} = mjn(\{\stof{j} \mid j \in \Omega\})} \\
 	\grayed{\forall \Omega \subseteq {\cal T}} & \grayed{\ctof{\Omega} = max(\{\ctof{j} \mid j \in \Omega\})} \\
 	\grayed{\forall \Omega \subseteq {\cal T}} & \grayed{\stof{\Omega} + \dur{\Omega} \leq \ctof{\Omega}} \\
-	 \forall \Omega \subseteq {\cal T},~ \forall i \not\in \Omega & \memph{\precvar{i}{\Omega} \iff \bigwedge_{j \in \Omega} \ctof{i} \leq \stof{j}} \\
+	 \forall \Omega \subseteq {\cal T},~ \forall i \not\in \Omega & \memph{\precvar{\Omega}{i} \iff \bigwedge_{j \in \Omega} \ctof{j} \leq \stof{i}} \\
 	 \forall \Omega \subseteq {\cal T},~ \forall i \not\in \Omega & \stof{\memph{\Omega \cup \{i\}}} \memph{+ \dur{i}} +
 	 \dur{\Omega}
-	 > \ctof{\Omega} \implies \memph{\precvar{i}{\Omega}}
+	 > \ctof{\Omega} \implies \memph{\precvar{\Omega}{i}}
 \end{eqnarray*}
 
 \begin{center}
@@ -55,7 +55,7 @@ Bound consistency on this decomposition fails \\
 
 
 \begin{frame}
-\frametitle{Not first / Not last decomposition}
+\frametitle{Not first / Not last decomposition (single-machine)}
 
 \begin{itemize}
 	\item Reverse implication \mycite{PinsonPhD} %, complete $O(n^2)$ algorithm~\mycite{BaptisteLePape96a}
@@ -67,13 +67,13 @@ Bound consistency on this decomposition fails \\
 	\grayed{\forall \Omega \subseteq {\cal T}} & \grayed{\stof{\Omega} = mjn(\{\stof{j} \mid j \in \Omega\})} \\
 	\grayed{\forall \Omega \subseteq {\cal T}} & \grayed{\ctof{\Omega} = max(\{\ctof{j} \mid j \in \Omega\})} \\
 	\grayed{\forall \Omega \subseteq {\cal T}} & \grayed{\stof{\Omega} + \dur{\Omega} \leq \ctof{\Omega}} \\
-	 \grayed{\forall \Omega \subseteq {\cal T},~ \forall i \not\in \Omega} & \grayed{\precvar{i}{\Omega} \iff \bigwedge_{j \in \Omega} \ctof{i} \leq \stof{j}} \\
+	 \grayed{\forall \Omega \subseteq {\cal T},~ \forall i \not\in \Omega} & \grayed{\precvar{\Omega}{i} \iff \bigwedge_{j \in \Omega} \ctof{j} \leq \stof{i}} \\
 	 \grayed{\forall \Omega \subseteq {\cal T},~ \forall i \not\in \Omega} & \grayed{\stof{{\Omega \cup \{i\}}} {+ \dur{i}} +
 	 \dur{\Omega}
-	 > \ctof{\Omega} \implies {\precvar{i}{\Omega}}} \\
+	 > \ctof{\Omega} \implies {\precvar{\Omega}{i}}} \\
 	 \forall \Omega \subseteq {\cal T},~ \forall i \not\in \Omega &
 	 \memph{\ctof{i} - \stof{\Omega} < \dur{\Omega} + \dur{i}
-	 \implies \neg \precvar{i}{\Omega}}
+	 \implies \neg \precvar{\Omega}{i}}
 \end{eqnarray*}
 
 \begin{center}

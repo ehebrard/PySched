@@ -57,6 +57,60 @@
 \begin{frame}
 \frametitle{Time-tabling algorithm: bound propagator}
 
+	\begin{itemize}
+		\item Assume \memph{$\capacity=3$} and consider the profile interval \memph{$[5,10):2$}
+		\uncover<2->{
+		\item A task \only<2-3>{\memph{$A$} such that $[\est{A},\lst{A})$ overlaps with $[5,10)$}\only<4->{\memph{$B$} counted in the profile}
+		}
+		\uncover<6->{
+		\item $[a,b)$ overlaps with $[\est{i},\min(\lst{i},\ect{i})) \implies \est{i} = \min(b,\lst{i})$  
+		}
+	\end{itemize}
+
+\begin{center}
+\begin{colorschedfigure}{.5}
+
+\PrintTics{0,3,...,15}{1.000000}
+\PrintGrid{15}{2}
+% \MandatoryPartTask{0.000000}{5.000000}{15.000000}{2}{0}{A}{A}
+
+\CProfile{{0.000000/0/5.000000/2, 5.000000/2/10.000000/0, 10.000000/0/15.000000/0}}{2}{4.700000}{A}{15.000000}
+
+\uncover<2>{
+\LeftExtensibleVariableTask{3}{15}{5}{5}{2}{0}{A}{A}
+\draw[color=bostonuniversityred, very thick, dotted] (3,0) -- (3,-3);
+\draw[color=bostonuniversityred, very thick, dotted] (8,0) -- (8,-3);
+}
+\uncover<3>{
+\GroundTask{10}{5}{2}{0}{A}{A}
+\PrunedExtensibleTask{3}{7}{7}{2}{0}{A}{}
+}
+
+\uncover<4-5>{
+\MandatoryPartTask{2.000000}{3.000000}{13.000000}{2}{0}{A}{B}
+\draw[color=bostonuniversityred, very thick, dotted] (2,0) -- (2,-3);
+\uncover<4>{
+\draw[color=bostonuniversityred, very thick, dotted] (10,0) -- (10,-3);
+}
+\uncover<5>{
+\draw[color=bostonuniversityred, very thick, dotted] (7,0) -- (7,-3);
+}
+}
+\uncover<6->{
+\GroundTask{7}{8}{2}{0}{A}{B}
+\PrunedExtensibleTask{2}{5}{5}{2}{0}{A}{}
+}
+
+
+\end{colorschedfigure}
+\end{center}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Time-tabling algorithm: bound propagator}
+
 \begin{columns}
 	\column{.35\textwidth}
 
@@ -65,11 +119,11 @@
 		\item Interval \memph{$[a,b):h$}, Task \memph{$i$}
 		\begin{itemize}
 			\item \memph{overloaded} iff \memph{$\demand{i}+h > \capacity$}
-			\item \memph{relevant} iff 
+			\item \memph{relevant} iff
 				\begin{itemize}
 					\item \memph{$\est{i} < b$} and
 					\item \memph{$\min(\ect{i},\lst{i}) > a$}
-				\end{itemize}	
+				\end{itemize}
 			% \item \memph{forbidden} iff \memph{$\min(\ect{i},\lst{i}) > a$}
 		\end{itemize}
 		%
@@ -81,27 +135,19 @@
 	\end{itemize}
 
 	\uncover<2->{
-	\begin{myblock}{Algorithm \mycite{OuelletQuimper13}}
+	\begin{myblock}{Algorithm \mycite{OuelletQuimper13} (?)}
 	\begin{itemize}
 		\item {\scriptsize compute profile}
 		\uncover<3->{
 		\item {\scriptsize order chuncks by decreasing \memph{$h$}}
 		\item {\scriptsize for \memph{$i \in {\cal T}$} by increasing \memph{$\demand{i}$}:}
 		\begin{itemize}
-			\item {\scriptsize add \memph{$i$}'s overload intervals}
+			\item {\scriptsize add \memph{$i$}'s over. intervals to \memph{$S$}}
 			\uncover<4->{
-			\item {\scriptsize find \memph{$i$}'s rightmost relevant \& overload interval}
+			\item {\scriptsize get \memph{$i$}'s relevant interval in \memph{$S$}}
 			\begin{itemize}
-				\item $O(\log n)$ if stored in a AVL tree
+				\item $O(\log n)$ if \memph{$S$} is an AVL tree
 			\end{itemize}
-			% \item {\scriptsize if there is \memph{$[a,b)$} s.t.}
-			% \begin{itemize}
-			% 	\item \memph{$\est{i} < b$} and
-			% 	\item \memph{$\min(\ect{i}, \lst{i}) > a$}
-			% \end{itemize}
-			% }
-			% \uncover<5->{
-			% \item {\scriptsize pruning!}
 			}
 		\end{itemize}
 		}
@@ -145,6 +191,13 @@
 \end{columns}
 
 \end{frame}
+
+
+\begin{frame}
+    \frametitle{PySched -- Available on GitHub}
+		\includegraphics[width=\textwidth]{im/code.png}
+\end{frame}
+
 
 
 

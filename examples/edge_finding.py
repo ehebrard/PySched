@@ -26,7 +26,7 @@ if __name__ == '__main__':
         if not ef.propagate():
             break
 
-        s.latex(outfile, animated=True, precedences=True, windows=True, width=25, horizon=25, rows=[[A],[B],[C],[D]], pruning=True)
+        s.latex(outfile, animated=True, precedences=True, windows=True, width=25, horizon=25, rows=[[A],[B],[C],[D]], pruning=True, decisions=False)
         # s.latex(outfile, animated=True, precedences=False, windows=True, width=25, horizon=25, rows=[[A],[B],[C],[D]], pruning=True)
         
     import examples
