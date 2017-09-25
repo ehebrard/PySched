@@ -140,10 +140,10 @@
 	% 	\item \memph{$\demand{i}+\demand{j}>\capacity \implies \precvar{i}{j} \vee \precvar{j}{i}$}
 	% \end{itemize}
 	\uncover<2->{
-	\item To keep the property that start times do not need to be instanciated:
+	\item To keep the property that start times do not need to be set:
 	
 	\begin{itemize}
-	\item For every \memph{minimal} subset \memph{$S$} of tasks such that \memph{$\sum_{i \in S}\demand{i} > \capacity$} to post:
+	\item For every \memph{minimal} subset \memph{$S$} of tasks such that \memph{$\sum_{i \in S}\demand{i} > \capacity$}, post:
 	% \begin{itemize}
 		% \item
 		\memph{$$\bigvee_{i \neq j \in S} \precvar{i}{j}$$}

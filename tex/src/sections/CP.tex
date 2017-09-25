@@ -116,8 +116,8 @@
 	
 	\begin{myblock}{A model of {\sc CumulativeResource}}
 		\begin{itemize}
-			\item \memph{Processing time}: require the resources for at least $\dur{i}$ time \hfill $\stof{i} + \dur{i} \geq \ctof{i}~\forall i$
-			\item \memph{Non preemption}: cannot be interrupted \hfill $\stof{i} + \dur{i} \leq \ctof{i}~\forall i$
+			\item \memph{Processing time}: require the resources for at least $\dur{i}$ time \hfill $\stof{i} + \dur{i} \leq \ctof{i}~\forall i$
+			\item \memph{Non preemption}: cannot be interrupted \hfill $\stof{i} + \dur{i} \geq \ctof{i}~\forall i$
 			\item \memph{Bounds}: release and due dates  \hfill  $\est{i} \leq \stof{i} \leq \ctof{i} \leq \lct{i}~\forall i$
 			\item \memph{Resource capacity}: additive, upper bounded resource usage \hfill $\sum_{\stof{i} \leq t \leq \ctof{i}} \demand{i} \leq \capacity~\forall t$
 		\end{itemize}
