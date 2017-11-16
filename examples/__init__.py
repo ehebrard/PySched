@@ -1,23 +1,27 @@
 import os
 import subprocess
 
-def writeFile(exfilename, datfilenames, scale=.45):
+def writeFile(exfilename, datfilenames, headers=None, scale=.45):
+    if headers is None:
+        headers = ['colorschedfigure']
     try:
         exfile = open('tex/src/%s.tex'%exfilename, 'w+')
         exfile.write('\\documentclass[usenames,dvipsnames,svgnames,table]{beamer}\n\\input{header}\n\\input{sched_macros}\n\\input{theta_macros}\n\n')
         exfile.write('\\begin{document}\n\\begin{frame}[fragile]\n')
         if isinstance(datfilenames, basestring):
             datfilenames = [datfilenames]
-        for datfilename in datfilenames:
+        else:
+            headers = headers*len(datfilenames)
+        for datfilename,header in zip(datfilenames,headers):
             if isinstance(datfilename, basestring):
-                exfile.write('\\begin{colorschedfigure}{%f}\n\\input{ex/%s.tex}\n\\end{colorschedfigure}\n'%(scale,datfilename))
+                exfile.write('\\begin{%s}{%f}\n\\input{ex/%s.tex}\n\\end{%s}\n'%(header,scale,datfilename,header))
             else:
-                exfile.write('\\begin{colorschedfigure}{%f}\n'%scale)
+                exfile.write('\\begin{%s}{%f}\n'%(header,scale))
                 count = 1
                 for dat in datfilename:
                     exfile.write('\\uncover<%i>{\\input{ex/%s.tex}}\n'%(count,dat))
                     count += 1
-                exfile.write('\\end{colorschedfigure}\n')
+                exfile.write('\\end{%s}\n'%header)
         exfile.write('\\end{frame}\n\\end{document}\n')
         exfile.close()
         

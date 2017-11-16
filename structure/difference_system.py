@@ -70,7 +70,6 @@ class DifferenceSystem:
             label = '$x_{%i}$'%(len(self.label))
         self.label.append(label)
                 
-         
     # save the current graph and bounds
     def save(self):
         # store the current size of the edge list (to remove subsequent edges)
@@ -414,14 +413,7 @@ class DifferenceSystem:
         #
         # # outfile.write('\\end{tikzpicture}\n')
         
-
-        
-        
-        
-
-            
-        
-        
+      
         
         
 if __name__ == '__main__':
