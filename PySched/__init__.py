@@ -599,11 +599,13 @@ class Schedule:
         return rows
     
             
-    def latex(self, outfile=sys.stdout, animated=False, tasks=None, precedences=True, windows=True, profile=None, profp=0, mandatory=False, rows=None, width=25.0, horizon=None, lb=False, ub=False, tics=None, ghost=[], offset=0, stop='', pruning=False, shifts=[], decisions=True):
+    def latex(self, outfile=sys.stdout, animated=False, tasks=None, precedences=True, windows=True, profile=None, profp=0, mandatory=False, rows=None, width=None, horizon=None, lb=False, ub=False, tics=None, ghost=[], offset=0, stop='', pruning=False, shifts=[], decisions=True):
         # h = max([self.getLatestCompletion(t) for t in self.tasks])
         self.close()
         if horizon is None:
             horizon = self.getMakespanUB()
+        if width is None:
+            width = min(horizon, 25.0)
         if mandatory:
             printMethod = Task.strProfile
         elif windows:
@@ -627,7 +629,7 @@ class Schedule:
         
         f = float(width) / float(horizon)
         
-        print 'horizon=%i, width=%i, factor=%f'%(horizon,  width, f)
+        # print 'horizon=%i, width=%i, factor=%f'%(horizon,  width, f)
         
         if rows is None:
             rows = self.rowsFromPaths()

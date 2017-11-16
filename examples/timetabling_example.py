@@ -45,7 +45,7 @@ if __name__ == '__main__':
         s.save()
 
     import examples
-    examples.writeFile('timetabling_example', 'timetabling', scale=.28)
+    examples.writeFile('timetabling_example', 'timetabling', scale=.3)
 
 
 
