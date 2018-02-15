@@ -1,6 +1,6 @@
 
 from PySched import *
-
+import PySched.examples as ex
                 
 if __name__ == '__main__':
     
@@ -26,14 +26,13 @@ if __name__ == '__main__':
     rB = Resource(s,'B',[D,E,F])
     rmap = dict([(start(t),t.resourceName()) for t in s.tasks] + [(end(t),t.resourceName()) for t in s.tasks])
     
-    s.graph.latex(outfile=open('tex/ex/precedence_graph.tex', 'w'), width=9, sep=2.5, resources=rmap)
-    s.graph.latex(outfile=open('tex/ex/precedence_graph_lb.tex', 'w'), width=9, sep=2.5, lb=[start(D)], resources=rmap)
-    s.graph.latex(outfile=open('tex/ex/precedence_graph_ub.tex', 'w'), width=9, sep=2.5, ub=[end(A)], resources=rmap)
-    s.latex(outfile=open('tex/ex/scheduling_instance.tex', 'w'),width=span, horizon=span, precedences=True, windows=False)
+    s.graph.latex(outfile=open('tex/ex/d_precedence_graph.tex', 'w'), width=9, sep=3, resources=rmap)
+    s.graph.latex(outfile=open('tex/ex/d_precedence_graph_lb.tex', 'w'), width=9, sep=3, lb=[start(D)], resources=rmap)
+    s.graph.latex(outfile=open('tex/ex/d_precedence_graph_ub.tex', 'w'), width=9, sep=3, ub=[end(A)], resources=rmap)
+    s.latex(outfile=open('tex/ex/d_scheduling_instance.tex', 'w'), precedences=True, windows=False)
     
-    import examples
-    examples.writeFile('graph_example', [['scheduling_instance'], ['precedence_graph']])
-    examples.writeFile('graph_bound_example', [['precedence_graph', 'precedence_graph_lb', 'precedence_graph_ub']])
+    ex.writeFile('graph_demo', [['d_scheduling_instance'], ['d_precedence_graph']])
+    ex.writeFile('graph_bound_demo', [['d_precedence_graph', 'd_precedence_graph_lb', 'd_precedence_graph_ub']])
 #
 
 

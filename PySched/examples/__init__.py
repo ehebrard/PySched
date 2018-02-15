@@ -2,6 +2,7 @@ import os
 import subprocess
 
 def writeFile(exfilename, datfilenames, headers=None, scale=.45):
+    
     if headers is None:
         headers = ['colorschedfigure']
     try:

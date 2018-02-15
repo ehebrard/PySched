@@ -1,7 +1,12 @@
 from setuptools import setup
-
+ 
 setup(
-     name='PySched',    # This is the name of your PyPI-package.
-     version='0.1',                          # Update the version number for new releases
-     scripts=['PySched']                  # The name of your scipt, and also the command you'll be using for calling it
- )
+    name='PySched',
+    version='0.1',
+    author='Emmanuel Hebrard',
+    packages=['PySched', 'PySched.structure', 'PySched.tools', 'PySched.examples'],
+    author_email='emmanuel.hebrard@gmail.com',
+    url='https://github.com/ehebrard/PySched',
+    description='A Python CP-based scheduling solver.',
+
+)

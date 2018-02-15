@@ -1,6 +1,6 @@
 
 from PySched import *
-import examples
+import PySched.examples as ex
                 
 if __name__ == '__main__':
     outfile = open('tex/ex/d_edgefinding.tex', 'w')
@@ -27,4 +27,4 @@ if __name__ == '__main__':
 
         s.latex(outfile, animated=True, precedences=True, windows=True, rows=[[A],[B],[C],[D]], pruning=True, decisions=False)
 
-    examples.writeFile('edgefinding_demo', 'd_edgefinding', scale=.45)
+    ex.writeFile('edgefinding_demo', 'd_edgefinding', scale=.45)

@@ -1,6 +1,6 @@
 
 from PySched import *
-import examples
+import PySched.examples as ex
 
                 
 if __name__ == '__main__':
@@ -46,7 +46,7 @@ if __name__ == '__main__':
     
     s.latex(outfile, animated=True, windows=False)
     
-    examples.writeFile('basic_demo', 'd_basic', scale=.5)
+    ex.writeFile('basic_demo', 'd_basic', scale=.5)
     
     
 

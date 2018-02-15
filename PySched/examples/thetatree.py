@@ -1,7 +1,7 @@
 
 from PySched import *
-import structure.theta_tree as theta
-import examples
+import PySched.structure.theta_tree as theta
+import PySched.examples as ex
                 
 if __name__ == '__main__':
     
@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
     tt.exec2latex(example,output=treefile)
 
-    examples.writeFile('thetatree_demo', ['d_theta', 'd_theta_tree'], headers=['colorschedfigure', 'downthreelvltree'], scale=.45)
+    ex.writeFile('thetatree_demo', ['d_theta', 'd_theta_tree'], headers=['colorschedfigure', 'downthreelvltree'], scale=.45)
 
 
 

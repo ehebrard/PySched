@@ -1,9 +1,12 @@
 
 from PySched import *
-from tools.branch_and_bound import *
+from PySched.tools.branch_and_bound import *
+import PySched.examples as ex
 
                 
 if __name__ == '__main__':
+    
+    outfile = open('tex/ex/d_branchandbound_trace.tex', 'w')
     
     s = Schedule()
     
@@ -17,12 +20,12 @@ if __name__ == '__main__':
     H = Task(s,duration=5,demand=1,label='H')
     I = Task(s,duration=1,demand=1,label='I')
     
-    A < D
-    D < G
-    B < E
-    E < H
-    C < F
-    F < I
+    A << D
+    D << G
+    B << E
+    E << H
+    C << F
+    F << I
     
     resA = Resource(s, 'A', [A,B,C])
     resB = Resource(s, 'B', [D,E,F])
@@ -33,16 +36,14 @@ if __name__ == '__main__':
 
     s.setMakespanUB(span)
     
-    rows = s.rowsFromPaths()
-    
-    outfile = open('tex/ex/branchandbound_trace.tex', 'w')
+    # rows = s.rowsFromPaths()
+    rows = [[A],[B],[C],[D],[E],[F],[G],[H],[I]]
     
     random.seed(12345)
     bnb = BranchAndBound(s)
     
     printsched = lambda x : s.latex(outfile=outfile, ub=True, lb=True, animated=True, windows=False, rows=rows, width=span, horizon=span, decisions=[(d.tasks[int(d.value())], d.tasks[1-int(d.value())]) for d in x.decisions])
-    bnb.search(limit=None, executeOnNode=printsched)
+    bnb.search(limit=None, executeOnNode=printsched, executeOnSolution=printsched)
 
-    import examples
-    examples.writeFile('branchandbound_example', 'branchandbound_trace')
+    ex.writeFile('branchandbound_demo', 'd_branchandbound_trace')
 
