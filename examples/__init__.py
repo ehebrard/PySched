@@ -25,7 +25,7 @@ def writeFile(exfilename, datfilenames, headers=None, scale=.45):
         exfile.write('\\end{frame}\n\\end{document}\n')
         exfile.close()
         
-        print '\n\nsuccessfully created %s.tex.tex in tex/src/\n => compile from tex/ with: pdflatex src/%s.tex\n'%(exfilename, exfilename)
+        print '\n\nsuccessfully created %s.tex in tex/src/\n => compile from tex/ with: pdflatex src/%s.tex\n'%(exfilename, exfilename)
     except error:
         print 'error:', error
     

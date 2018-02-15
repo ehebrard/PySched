@@ -26,9 +26,9 @@ if __name__ == '__main__':
     rB = Resource(s,'B',[D,E,F])
     rmap = dict([(start(t),t.resourceName()) for t in s.tasks] + [(end(t),t.resourceName()) for t in s.tasks])
     
-    s.graph.latex(outfile=open('tex/ex/d_precedence_graph.tex', 'w'), width=9, sep=2.5, resources=rmap)
-    s.graph.latex(outfile=open('tex/ex/d_precedence_graph_lb.tex', 'w'), width=9, sep=2.5, lb=[start(D)], resources=rmap)
-    s.graph.latex(outfile=open('tex/ex/d_precedence_graph_ub.tex', 'w'), width=9, sep=2.5, ub=[end(A)], resources=rmap)
+    s.graph.latex(outfile=open('tex/ex/d_precedence_graph.tex', 'w'), width=9, sep=3, resources=rmap)
+    s.graph.latex(outfile=open('tex/ex/d_precedence_graph_lb.tex', 'w'), width=9, sep=3, lb=[start(D)], resources=rmap)
+    s.graph.latex(outfile=open('tex/ex/d_precedence_graph_ub.tex', 'w'), width=9, sep=3, ub=[end(A)], resources=rmap)
     s.latex(outfile=open('tex/ex/d_scheduling_instance.tex', 'w'), precedences=True, windows=False)
     
     examples.writeFile('graph_demo', [['d_scheduling_instance'], ['d_precedence_graph']])

@@ -33,7 +33,6 @@ trace_file = open('tex/ex/trace.tex', 'w')
 
 
 
-
 def start(t):
     return 2*(int(t)+1)
 
@@ -599,7 +598,7 @@ class Schedule:
         return rows
     
             
-    def latex(self, outfile=sys.stdout, animated=False, tasks=None, precedences=True, windows=True, profile=None, profp=0, mandatory=False, rows=None, width=None, horizon=None, lb=False, ub=False, tics=None, ghost=[], offset=0, stop='', pruning=False, shifts=[], decisions=True):
+    def latex(self, outfile=sys.stdout, animated=True, tasks=None, precedences=True, windows=True, profile=None, profp=-0.00001, mandatory=False, rows=None, width=None, horizon=None, lb=False, ub=False, tics=None, ghost=[], offset=0, stop='', pruning=False, shifts=[], decisions=True):
         # h = max([self.getLatestCompletion(t) for t in self.tasks])
         self.close()
         if horizon is None:
@@ -773,7 +772,6 @@ class Schedule:
         for t in self.tasks:
             print '%2i (%1i-%1i): [%2i..%2i]'%(int(t), self.getMinDuration(t), self.getMaxDuration(t), self.getEarliestStart(t), self.getLatestCompletion(t))
         print
-        
         
 
 class Resource(list):
