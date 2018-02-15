@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 
 def writeFile(exfilename, datfilenames, headers=None, scale=.45):
@@ -27,8 +28,10 @@ def writeFile(exfilename, datfilenames, headers=None, scale=.45):
         exfile.close()
         
         print '\n\nsuccessfully created %s.tex in tex/src/\n => compile from tex/ with: pdflatex src/%s.tex\n'%(exfilename, exfilename)
-    except error:
-        print 'error:', error
+    except IOError as e:
+        print "I/O error({0}): {1}".format(e.errno, e.strerror)
+    except:
+        print 'unexpected error!'
     
 # def compileLatex(exfilename):
 #     try:
