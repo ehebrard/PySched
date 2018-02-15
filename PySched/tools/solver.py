@@ -6,8 +6,8 @@ import random
 import sys
 
 
-import tools.reader as reader
-import tools.branch_and_bound as algo
+import PySched.tools.reader as reader
+import PySched.tools.branch_and_bound as algo
 
 
 def cmdLineSolver():
