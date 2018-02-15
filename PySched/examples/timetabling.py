@@ -1,6 +1,6 @@
 
 from PySched import *
-import examples
+import PySched.examples as ex
                 
 if __name__ == '__main__':
     
@@ -35,7 +35,7 @@ if __name__ == '__main__':
         
         s.save()
 
-    examples.writeFile('timetabling_demo', 'd_timetabling', scale=.3)
+    ex.writeFile('timetabling_demo', 'd_timetabling', scale=.3)
 
 
 
