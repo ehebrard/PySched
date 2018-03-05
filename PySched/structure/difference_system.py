@@ -139,12 +139,12 @@ class DifferenceSystem:
     def printBounds(self):
         for x in range(len(self.succ)):
             print '%i: [%i..%i]'%(x, self.getLB(x), self.getUB(x))
-            
-    def updateUB(self,x,d):
-        self.addEdge(x,0,d)
-        
+                
     def updateLB(self,x,d):
         self.addEdge(0,x,d)
+        
+    def updateUB(self,x,d):
+        self.addEdge(x,0,d)
             
     # The following are what we need to run Bellman-Ford (forward or backward)
     def getForwardDistance(self,x,y):
@@ -153,13 +153,13 @@ class DifferenceSystem:
     def getBackwardDistance(self,x,y):
         return self.distance[x][y]
 
-    def setUB(self,x,d):
-        self.addNoUpdate(x,0,d)
-        # self.schedule.notify(x,UB_CHANGE)
-
     def setLB(self,x,d):
         self.addNoUpdate(0,x,d)
         # self.schedule.notify(x,LB_CHANGE)
+
+    def setUB(self,x,d):
+        self.addNoUpdate(x,0,d)
+        # self.schedule.notify(x,UB_CHANGE)
 
     def cycle(self,x,y):
         if DEBUG_DIFF:
