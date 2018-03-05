@@ -1,0 +1,213 @@
+\documentclass[usenames,dvipsnames,svgnames,table]{beamer}
+
+
+\usetheme{laas}
+\input{header}
+\input{extra}
+\input{sched_macros}
+\input{theta_macros}
+
+% \usepackage[utf8]{inputenc}
+% \usepackage[T1]{fontenc}
+% \usepackage[french]{babel}
+
+%
+% \usetikzlibrary{external}
+% \tikzexternalize
+%
+
+% \begin{filecontents}{\jobname.bib}
+% \input{src/biblio/index.bib}
+% \end{filecontents}
+\usepackage[style=authoryear]{biblatex}
+\renewcommand*{\nameyeardelim}{\addcomma\addspace}
+
+
+\newcommand\grayed[1]{\textcolor{black!30}{#1}}
+
+% \usepackage[normalem]{ulem}
+% \usepackage{calc}
+% \newsavebox\CBox
+% \newcommand\hcancel[2][0.5pt]{%
+%   \ifmmode\sbox\CBox{$#2$}\else\sbox\CBox{#2}\fi%
+%   \makebox[0pt][l]{\usebox\CBox}%
+%   \rule[0.5\ht\CBox-#1/2]{\wd\CBox}{#1}}
+\usepackage{cancel}	
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+
+\usepackage{xspace}
+
+\newcommand\pa[1]{\ensuremath{\left(#1\right)}}
+
+
+\definecolor{cadmiumgreen}{rgb}{0.0, 0.42, 0.24}
+\newcommand\mycitation[1]{{\scriptsize \textcolor{cadmiumgreen}{[#1]}}}
+\newcommand\mycite[1]{{\scriptsize \textcolor{cadmiumgreen}{\parencite{#1}}}}
+
+% \usepackage{tkz-graph}
+% \usetikzlibrary{arrows,%
+%                 petri,%
+%                 topaths,%
+% 								calc,%
+% 								automata,
+% 								positioning}%
+
+
+\author{Emmanuel Hebrard}
+\title{PySched}
+
+
+
+%\addbibresource{\jobname.bib}
+\addbibresource{src/biblio/index.bib}
+\begin{document}
+
+\begin{frame}
+	\frametitle{Observation Satellites}
+	
+	
+	\begin{colorschedfigure}{.6}
+	\PrintTics{0,3,...,15}{1}
+	\PrintGrid{15}{3}
+	
+	
+	\uncover<1>{
+	\ExtensibleTask{-2}{5}{5}{1}{-3}{A}{$f_1$}
+	}
+	\uncover<2->{
+	\PhantomExtensibleTask{-2}{5}{5}{1}{-3}{A}{$f_1$}
+	}
+	\uncover<1-2>{
+	\ExtensibleTask{-2}{2}{2}{1}{-4}{B}{$f_2$}
+	}
+	\uncover<3->{
+	\PhantomExtensibleTask{-2}{2}{2}{1}{-4}{B}{$f_2$}
+	}
+	\uncover<1-3>{
+	\ExtensibleTask{-2}{2}{2}{1}{-5}{C}{$f_3$}
+	}
+	\uncover<4->{
+	\PhantomExtensibleTask{-2}{2}{2}{1}{-5}{C}{$f_3$}
+	}
+	\uncover<1-4>{
+	\ExtensibleTask{-2}{3}{3}{1}{-6}{D}{$f_4$}
+	}
+	\uncover<5->{
+	\PhantomExtensibleTask{-2}{3}{3}{1}{-6}{D}{$f_4$}
+	}
+	\uncover<1-5>{
+	\ExtensibleTask{3}{1}{1}{1}{-3}{A}{$f_5$}
+	}
+	\uncover<6->{
+	\PhantomExtensibleTask{3}{1}{1}{1}{-3}{A}{$f_5$}
+	}
+	\uncover<1-6>{
+	\ExtensibleTask{4}{3}{3}{1}{-3}{A}{$f_6$}
+	}
+	\uncover<7->{
+	\PhantomExtensibleTask{4}{3}{3}{1}{-3}{A}{$f_6$}
+	}
+	\uncover<1-7>{
+	\ExtensibleTask{0}{5}{5}{1}{-4}{B}{$f_7$}
+	}
+	\uncover<8->{
+	\PhantomExtensibleTask{0}{5}{5}{1}{-4}{B}{$f_7$}
+	}
+	\uncover<1-8>{
+	\ExtensibleTask{0}{5}{5}{1}{-5}{C}{$f_8$}
+	}
+	\uncover<9->{
+	\PhantomExtensibleTask{0}{5}{5}{1}{-5}{C}{$f_8$}
+	}
+	\uncover<1-9>{
+	\ExtensibleTask{5}{2}{2}{1}{-4}{B}{$f_{9}$}
+	}
+	\uncover<10->{
+	\PhantomExtensibleTask{5}{2}{2}{1}{-4}{B}{$f_{9}$}
+	}
+	\uncover<1-10>{
+	\ExtensibleTask{1}{5}{5}{1}{-6}{D}{$f_{10}$}
+	}
+	\uncover<11->{
+	\PhantomExtensibleTask{1}{5}{5}{1}{-6}{D}{$f_{10}$}
+	}
+	
+	
+	\uncover<2-11> {
+	\ExtensibleTask{0}{5}{5}{1}{0}{A}{$f_1$}
+	}
+	\uncover<3-11> {
+	\ExtensibleTask{0}{2}{2}{1}{1}{B}{$f_2$}
+	}
+	\uncover<4-11> {
+	\ExtensibleTask{0}{2}{2}{1}{2}{C}{$f_3$}
+	}
+	\uncover<5-11> {
+	\ExtensibleTask{5}{3}{3}{1}{0}{D}{$f_4$}
+	}
+	\uncover<6-11> {
+	\ExtensibleTask{5}{1}{1}{1}{1}{A}{$f_5$}
+	}
+	\uncover<7-11> {
+	\ExtensibleTask{6}{3}{3}{1}{2}{A}{$f_6$}
+	}
+	\uncover<8-11> {
+	\ExtensibleTask{6}{5}{5}{1}{1}{B}{$f_7$}
+	}
+	\uncover<9-11> {
+	\ExtensibleTask{9}{5}{5}{1}{2}{C}{$f_8$}
+	}
+	\uncover<10-11> {
+	\ExtensibleTask{11}{2}{2}{1}{0}{B}{$f_{9}$}
+	}
+	\uncover<11> {
+	\ExtensibleTask{11}{5}{5}{1}{1}{D}{$f_{10}$}
+	}
+	
+	\uncover<12> {
+	\ExtensibleTask{0}{5}{5}{1}{0}{A}{$f_1$}
+	\ExtensibleTask{0}{5}{5}{1}{1}{B}{$f_7$}
+	\ExtensibleTask{0}{5}{5}{1}{2}{D}{$f_{10}$}
+	\ExtensibleTask{5}{5}{5}{1}{0}{C}{$f_8$}
+	\ExtensibleTask{5}{2}{2}{1}{1}{B}{$f_2$}
+	\ExtensibleTask{5}{3}{3}{1}{2}{D}{$f_4$}
+	\ExtensibleTask{7}{3}{3}{1}{1}{A}{$f_6$}
+	\ExtensibleTask{10}{2}{2}{1}{0}{C}{$f_3$}
+	\ExtensibleTask{8}{2}{2}{1}{2}{B}{$f_{9}$}
+	\ExtensibleTask{10}{1}{1}{1}{1}{A}{$f_5$}
+	}
+	
+	\node[] at (-2, -.5) {{\footnotesize Antenne 1}};
+	\node[] at (-2, -1.5) {{\footnotesize Antenne 2}};
+	\node[] at (-2, -2.5) {{\footnotesize Antenne 3}};
+
+
+	\node[] at (12.3,3.5) {
+	{\footnotesize 
+		\begin{tabular}{l}
+			$-$ At most 3 simultaneous transfers\\
+			~\\
+			$-$ No two files from the same \\
+			~~~memory block (color) in parallel\\
+			~\\
+			$-$ Mimise the total duration\\
+		\end{tabular}
+		}
+	};
+	
+	\end{colorschedfigure}
+	
+\end{frame}
+	
+
+
+\end{document}
+
+
+
+

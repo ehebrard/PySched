@@ -1,0 +1,209 @@
+\documentclass[usenames,dvipsnames,svgnames,table]{beamer}
+
+
+\usetheme{laas}
+\input{header}
+\input{extra}
+\input{sched_macros}
+\input{theta_macros}
+
+% \usepackage[utf8]{inputenc}
+% \usepackage[T1]{fontenc}
+% \usepackage[french]{babel}
+
+%
+% \usetikzlibrary{external}
+% \tikzexternalize
+%
+
+% \begin{filecontents}{\jobname.bib}
+% \input{src/biblio/index.bib}
+% \end{filecontents}
+\usepackage[style=authoryear]{biblatex}
+\renewcommand*{\nameyeardelim}{\addcomma\addspace}
+
+
+\newcommand\grayed[1]{\textcolor{black!30}{#1}}
+
+% \usepackage[normalem]{ulem}
+% \usepackage{calc}
+% \newsavebox\CBox
+% \newcommand\hcancel[2][0.5pt]{%
+%   \ifmmode\sbox\CBox{$#2$}\else\sbox\CBox{#2}\fi%
+%   \makebox[0pt][l]{\usebox\CBox}%
+%   \rule[0.5\ht\CBox-#1/2]{\wd\CBox}{#1}}
+\usepackage{cancel}	
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+
+\usepackage{xspace}
+
+\newcommand\pa[1]{\ensuremath{\left(#1\right)}}
+
+
+\definecolor{cadmiumgreen}{rgb}{0.0, 0.42, 0.24}
+\newcommand\mycitation[1]{{\scriptsize \textcolor{cadmiumgreen}{[#1]}}}
+\newcommand\mycite[1]{{\scriptsize \textcolor{cadmiumgreen}{\parencite{#1}}}}
+
+% \usepackage{tkz-graph}
+% \usetikzlibrary{arrows,%
+%                 petri,%
+%                 topaths,%
+% 								calc,%
+% 								automata,
+% 								positioning}%
+
+
+\author{Emmanuel Hebrard}
+\title{PySched}
+
+
+
+%\addbibresource{\jobname.bib}
+\addbibresource{src/biblio/index.bib}
+\begin{document}
+
+
+
+\begin{frame}
+	\frametitle{Planning Philae's activities}
+	
+	\begin{colorschedfigure}{.5}
+	\PrintTics{0,3,...,18}{1}
+	\PrintGrid{18}{4}
+	
+	
+
+	\uncover<1> {
+	\ExtensibleTask{0}{4}{4}{1}{-7}{A}{xRolis}
+	\ExtensibleTask{0}{4}{4}{1}{-7}{A}{Rolis}
+	}
+	\uncover<2-10> {
+	\PhantomExtensibleTask{0}{4}{4}{1}{-7}{A}{Rolis}
+	}
+	\uncover<2-9> {
+	\ExtensibleTask{0}{4}{4}{1}{0}{A}{Rolis}
+	}
+	
+	
+	\uncover<1-2> {
+	\ExtensibleTask{0}{5}{5}{3}{-5}{A}{xMupus}
+	\ExtensibleTask{0}{5}{5}{3}{-5}{A}{Mupus}
+	}
+	\uncover<3-10> {
+	\PhantomExtensibleTask{0}{5}{5}{3}{-5}{A}{Mupus}
+	}
+	\uncover<3-9> {
+	\ExtensibleTask{0}{5}{5}{3}{1}{A}{Mupus}
+	}
+	
+
+	\uncover<1-3> {
+	\ExtensibleTask{6}{2}{2}{1}{-8}{A}{xSesame}
+	\ExtensibleTask{6}{2}{2}{1}{-8}{A}{Sesame}
+	}
+	\uncover<4-10> {
+	\PhantomExtensibleTask{6}{2}{2}{1}{-8}{A}{Sesame}
+	}
+	\uncover<4-9> {
+	\ExtensibleTask{4}{2}{2}{1}{0}{A}{Sesame}
+	}
+	
+	\uncover<1-4> {
+	\ExtensibleTask{6}{4}{4}{4}{-6}{A}{xPtolemy}
+	\ExtensibleTask{6}{4}{4}{4}{-6}{A}{Ptolemy}
+	}
+	\uncover<5-10> {
+	\PhantomExtensibleTask{6}{4}{4}{4}{-6}{A}{Ptolemy}
+	}
+	\uncover<5-9> {
+	\ExtensibleTask{6}{4}{4}{4}{0}{A}{Ptolemy}
+	}
+	
+	\uncover<1-5> {
+	\ExtensibleTask{11}{2}{2}{3}{-7}{A}{xAPXS}	
+	\ExtensibleTask{11}{2}{2}{3}{-7}{A}{APXS}	
+	}
+	\uncover<6-10> {
+	\PhantomExtensibleTask{11}{2}{2}{3}{-7}{A}{APXS}	
+	}
+	\uncover<6-9> {
+	\ExtensibleTask{10}{2}{2}{3}{0}{A}{APXS}	
+	}
+	
+	\uncover<1-6> {
+	\ExtensibleTask{11}{10}{10}{1}{-3}{A}{xSD2}
+	\ExtensibleTask{11}{10}{10}{1}{-3}{A}{SD2}
+	}
+	\uncover<7-10> {
+	\PhantomExtensibleTask{11}{10}{10}{1}{-3}{A}{SD2}
+	}
+	\uncover<7-9> {
+	\ExtensibleTask{10}{10}{10}{1}{3}{A}{SD2}
+	}
+	
+	\uncover<1-7> {
+	\ExtensibleTask{14}{6}{6}{2}{-8}{A}{Civa}
+	}
+	\uncover<8-10> {
+	\PhantomExtensibleTask{14}{6}{6}{2}{-8}{A}{Civa}
+	}
+	\uncover<8-9> {
+	\ExtensibleTask{12}{6}{6}{2}{0}{A}{Civa}
+	}
+	
+	\uncover<1-8> {
+	\ExtensibleTask{18}{3}{3}{1}{-5}{A}{xConcert}
+	\ExtensibleTask{18}{3}{3}{1}{-5}{A}{Concert}
+	}
+	\uncover<9-10> {
+	\PhantomExtensibleTask{18}{3}{3}{1}{-5}{A}{Concert}
+	}
+	\uncover<9> {
+	\ExtensibleTask{20}{3}{3}{1}{3}{A}{Concert}
+	}
+
+
+
+	\Precedence{xMupus}{xPtolemy}{}	
+	\Precedence{xSesame}{xAPXS}{}
+	\Precedence{xRolis}{xSesame}{}
+	\Precedence{xSD2}{xConcert}{}
+	
+	
+	\uncover<10>{
+	\ExtensibleTask{0}{6}{6}{2}{0}{A}{Civa}
+	\ExtensibleTask{0}{4}{4}{1}{2}{A}{Rolis}
+	\ExtensibleTask{0}{10}{10}{1}{3}{A}{SD2}
+	\ExtensibleTask{4}{2}{2}{1}{2}{A}{Sesame}
+	\ExtensibleTask{6}{5}{5}{3}{0}{A}{Mupus}
+	\ExtensibleTask{10}{3}{3}{1}{3}{A}{Concert}
+	\ExtensibleTask{11}{2}{2}{3}{0}{A}{APXS}
+	\ExtensibleTask{13}{4}{4}{4}{0}{A}{Ptolemy}
+	}
+	
+	\draw[->, very thick] (-.6,-4) -- (-.6,0);
+	
+	\node[rotate=90] at (-1.2, -2) {{\footnotesize consumption}};
+	
+	
+	% \Precedence{APXS}{Sesame}{}
+	% \Precedence{Rolis}{Mupus}{}
+	% \Precedence{Rolis}{APXS}{}
+	% \Precedence{Mupus}{Ptolemy}{}
+
+	\end{colorschedfigure}
+	
+\end{frame}
+
+
+
+\end{document}
+
+
+
+

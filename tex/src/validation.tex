@@ -1,0 +1,193 @@
+\documentclass[usenames,dvipsnames,svgnames,table]{beamer}
+
+
+\usetheme{laas}
+\input{header}
+\input{extra}
+\input{sched_macros}
+\input{theta_macros}
+
+% \usepackage[utf8]{inputenc}
+% \usepackage[T1]{fontenc}
+% \usepackage[french]{babel}
+
+%
+% \usetikzlibrary{external}
+% \tikzexternalize
+%
+
+% \begin{filecontents}{\jobname.bib}
+% \input{src/biblio/index.bib}
+% \end{filecontents}
+\usepackage[style=authoryear]{biblatex}
+\renewcommand*{\nameyeardelim}{\addcomma\addspace}
+
+
+\newcommand\grayed[1]{\textcolor{black!30}{#1}}
+
+% \usepackage[normalem]{ulem}
+% \usepackage{calc}
+% \newsavebox\CBox
+% \newcommand\hcancel[2][0.5pt]{%
+%   \ifmmode\sbox\CBox{$#2$}\else\sbox\CBox{#2}\fi%
+%   \makebox[0pt][l]{\usebox\CBox}%
+%   \rule[0.5\ht\CBox-#1/2]{\wd\CBox}{#1}}
+\usepackage{cancel}	
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+
+\usepackage{xspace}
+
+\newcommand\pa[1]{\ensuremath{\left(#1\right)}}
+
+
+\definecolor{cadmiumgreen}{rgb}{0.0, 0.42, 0.24}
+\newcommand\mycitation[1]{{\scriptsize \textcolor{cadmiumgreen}{[#1]}}}
+\newcommand\mycite[1]{{\scriptsize \textcolor{cadmiumgreen}{\parencite{#1}}}}
+
+% \usepackage{tkz-graph}
+% \usetikzlibrary{arrows,%
+%                 petri,%
+%                 topaths,%
+% 								calc,%
+% 								automata,
+% 								positioning}%
+
+
+\author{Emmanuel Hebrard}
+\title{PySched}
+
+
+
+%\addbibresource{\jobname.bib}
+\addbibresource{src/biblio/index.bib}
+\begin{document}
+
+
+
+\begin{frame}
+	\frametitle{Validation test scheduling}
+	
+	\begin{center}
+	\begin{colorschedfigure}{.8}
+	\PrintTics{0,1,...,8}{1}
+	\PrintGrid{8}{6}
+	
+	\node[] at (-1, -.5) {tests:};
+	
+	\draw [decorate,decoration={brace,amplitude=10pt}]
+	(-.1,-6) -- (-.1,-1) node [black,midway,xshift=-1.4cm] {{\footnotesize equipments}};
+	% \draw[->, very thick] (-.6,-6) -- (-.6,-1);
+	
+	% \node[rotate=90] at (-1.2, -3.5) {{\footnotesize equipements}};
+	
+	
+	\uncover<1-2>{
+	\ExtensibleTask{0}{1}{1}{1}{0}{E}{$t_1$}
+	\ExtensibleTask{0}{1}{1}{1}{1}{A}{}
+	\ExtensibleTask{0}{1}{1}{1}{2}{B}{}
+	
+	\ExtensibleTask{1}{1}{1}{1}{0}{E}{$t_2$}
+	\ExtensibleTask{1}{1}{1}{1}{3}{C}{}
+	\ExtensibleTask{1}{1}{1}{1}{4}{D}{}
+	
+	\ExtensibleTask{2}{1}{1}{1}{0}{E}{$t_3$}
+	\ExtensibleTask{2}{1}{1}{1}{1}{A}{}
+	\ExtensibleTask{2}{1}{1}{1}{5}{H}{}
+	
+	\ExtensibleTask{3}{1}{1}{1}{0}{E}{$t_4$}
+	\ExtensibleTask{3}{1}{1}{1}{2}{B}{}
+	\ExtensibleTask{3}{1}{1}{1}{3}{C}{}
+	
+	\ExtensibleTask{4}{1}{1}{1}{0}{E}{$t_5$}
+	\ExtensibleTask{4}{1}{1}{1}{4}{D}{}
+	\ExtensibleTask{4}{1}{1}{1}{5}{H}{}
+	
+	\ExtensibleTask{5}{1}{1}{1}{0}{E}{$t_6$}
+	\ExtensibleTask{5}{1}{1}{1}{2}{B}{}
+	\ExtensibleTask{5}{1}{1}{1}{5}{H}{}
+	
+	\ExtensibleTask{6}{1}{1}{1}{0}{E}{$t_7$}
+	\ExtensibleTask{6}{1}{1}{1}{1}{A}{}
+	\ExtensibleTask{6}{1}{1}{1}{3}{C}{}
+	
+	\ExtensibleTask{7}{1}{1}{1}{0}{E}{$t_8$}
+	\ExtensibleTask{7}{1}{1}{1}{2}{B}{}
+	\ExtensibleTask{7}{1}{1}{1}{4}{D}{}
+	}
+	
+	\uncover<2>{
+	\PhantomExtensibleTask{0}{1}{1}{1}{3}{C}{}
+	\PhantomExtensibleTask{1}{1}{1}{1}{1}{A}{}
+	\PhantomExtensibleTask{2}{1}{1}{1}{3}{C}{}
+	\PhantomExtensibleTask{3}{1}{1}{1}{5}{H}{}
+	\PhantomExtensibleTask{4}{1}{1}{1}{2}{B}{}
+	\PhantomExtensibleTask{5}{1}{1}{1}{1}{A}{}
+	\PhantomExtensibleTask{6}{1}{1}{1}{2}{B}{}
+	\PhantomExtensibleTask{7}{1}{1}{1}{1}{A}{}
+	}
+	
+	\uncover<3->{
+	\ExtensibleTask{0}{1}{1}{1}{0}{E}{$t_1$}
+	\ExtensibleTask{0}{1}{1}{1}{1}{A}{}
+	\ExtensibleTask{0}{1}{1}{1}{2}{B}{}
+	
+	\ExtensibleTask{1}{1}{1}{1}{0}{E}{$t_4$}
+	\ExtensibleTask{1}{1}{1}{1}{2}{B}{}
+	\ExtensibleTask{1}{1}{1}{1}{3}{C}{}
+	
+	\ExtensibleTask{2}{1}{1}{1}{0}{E}{$t_7$}
+	\ExtensibleTask{2}{1}{1}{1}{1}{A}{}
+	\ExtensibleTask{2}{1}{1}{1}{3}{C}{}
+	
+	\ExtensibleTask{3}{1}{1}{1}{0}{E}{$t_2$}
+	\ExtensibleTask{3}{1}{1}{1}{3}{C}{}
+	\ExtensibleTask{3}{1}{1}{1}{4}{D}{}
+	
+	\ExtensibleTask{4}{1}{1}{1}{0}{E}{$t_8$}
+	\ExtensibleTask{4}{1}{1}{1}{2}{B}{}
+	\ExtensibleTask{4}{1}{1}{1}{4}{D}{}
+	
+	\ExtensibleTask{5}{1}{1}{1}{0}{E}{$t_5$}
+	\ExtensibleTask{5}{1}{1}{1}{4}{D}{}
+	\ExtensibleTask{5}{1}{1}{1}{5}{H}{}
+	
+	\ExtensibleTask{6}{1}{1}{1}{0}{E}{$t_6$}
+	\ExtensibleTask{6}{1}{1}{1}{2}{B}{}
+	\ExtensibleTask{6}{1}{1}{1}{5}{H}{}
+	
+	\ExtensibleTask{7}{1}{1}{1}{0}{E}{$t_3$}
+	\ExtensibleTask{7}{1}{1}{1}{1}{A}{}
+	\ExtensibleTask{7}{1}{1}{1}{5}{H}{}
+
+	}
+	
+	\uncover<4->{
+	\PhantomExtensibleTask{0}{1}{1}{1}{3}{C}{}
+	\PhantomExtensibleTask{1}{1}{1}{1}{1}{A}{}
+	\PhantomExtensibleTask{2}{1}{1}{1}{2}{B}{}
+	\PhantomExtensibleTask{3}{1}{1}{1}{2}{B}{}
+	\PhantomExtensibleTask{4}{1}{1}{1}{3}{C}{}
+	\PhantomExtensibleTask{5}{1}{1}{1}{2}{B}{}
+	\PhantomExtensibleTask{6}{1}{1}{1}{1}{A}{}
+	\PhantomExtensibleTask{7}{1}{1}{1}{2}{B}{}
+	}
+	
+	\end{colorschedfigure}
+	\end{center}
+	
+\end{frame}
+
+
+
+
+
+\end{document}
+
+
+
+
