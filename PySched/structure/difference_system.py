@@ -129,10 +129,10 @@ class DifferenceSystem:
         return self.distance[0][x]
         
     def getMinDistance(self,x,y):
-        return -self.distance[x][y];
+        return -self.distance[y][x];
         
     def getMaxDistance(self,x,y):
-        return self.distance[y][x];
+        return self.distance[x][y];
         
     def printGraph(self):
         for xi, xj, k in self.edges:

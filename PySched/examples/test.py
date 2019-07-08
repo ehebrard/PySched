@@ -36,7 +36,10 @@ if __name__ == '__main__':
     
 
     
-    print 'min distance from end(D) to start(B):', -s.graph.distance[end(D)][start(B)];
-    print 'min distance from end(B) to start(D):', -s.graph.distance[end(B)][start(D)];
+    print 'min distance from start(B) to end(D):', -s.graph.distance[end(D)][start(B)];
+    print 'min distance from start(D) to end(B):', -s.graph.distance[end(B)][start(D)];
+    
+    print 'max distance from start(B) to end(D):', s.graph.distance[start(B)][end(D)];
+    print 'max distance from start(D) to end(B):', s.graph.distance[start(D)][end(B)];
 
 
