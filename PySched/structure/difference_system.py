@@ -128,6 +128,12 @@ class DifferenceSystem:
     def getUB(self,x):
         return self.distance[0][x]
         
+    def getMinDistance(self,x,y):
+        return -self.distance[x][y];
+        
+    def getMaxDistance(self,x,y):
+        return self.distance[y][x];
+        
     def printGraph(self):
         for xi, xj, k in self.edges:
             print xi, '-[%i]->'%self.distance[xj][xi], xj

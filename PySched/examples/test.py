@@ -34,6 +34,12 @@ if __name__ == '__main__':
     
     s.graph.printMatrix()
     
+
+    
+    print 'min distance from end(D) to start(B):', -s.graph.distance[end(D)][start(B)];
+    print 'min distance from end(B) to start(D):', -s.graph.distance[end(B)][start(D)];
+
+    
     s.graph.latex(outfile=open('tex/ex/d_precedence_graph.tex', 'w'), width=9, sep=3)
     
     ex.writeFile('graph_demo', [['d_precedence_graph']])
