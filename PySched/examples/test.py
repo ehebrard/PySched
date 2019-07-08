@@ -8,10 +8,10 @@ if __name__ == '__main__':
     
     s.closure = s.graph.FloydWarshall
     
-    A = Task(s,duration=4,demand=1,label='A')
-    B = Task(s,duration=3,demand=1,label='B')
-    C = Task(s,duration=5,demand=1,label='C')
-    D = Task(s,duration=4,demand=1,label='D')
+    A = Task(s,duration=10,demand=1,label='A')
+    B = Task(s,duration=10,demand=1,label='B')
+    C = Task(s,duration=10,demand=1,label='C')
+    D = Task(s,duration=10,demand=1,label='D')
             
     s.startBeforeEnd(A,B)
     s.startBeforeEnd(B,A)
@@ -21,6 +21,8 @@ if __name__ == '__main__':
     s.startBeforeEnd(D,C)
     s.startBeforeEnd(A,D)
     s.startBeforeEnd(D,A)
+    
+    A << C
 
     span = 100
     s.setMakespanUB(span)
@@ -28,7 +30,7 @@ if __name__ == '__main__':
     
     s.graph.printMatrix()
     
-    s.propagate()
+    s.propagate(trace=True)
     
     s.graph.printMatrix()
     
